@@ -10,7 +10,7 @@ const PATH_DIST = path.resolve(__dirname, '../../dist');
 app.use('/styles', Express.static(PATH_STYLES));
 app.use(Express.static(PATH_DIST));
 
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/index.html'));
 });
 

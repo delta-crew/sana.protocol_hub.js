@@ -2,7 +2,7 @@ import React from 'react';
 import MdsList from './MdsList';
 import ProcedureList from './ProcedureList';
 
-class MdsProceduresPage extends React.Component {
+class SyncPage extends React.Component {
   render() {
     return (
       <div class="row">
@@ -28,4 +28,4 @@ class MdsProceduresPage extends React.Component {
   }
 }
 
-module.exports = MdsProceduresPage;
+module.exports = SyncPage;

@@ -6,7 +6,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-          <header class='container-fluid spb-container' id='mdsprocedures-menu'>
+          <header className='container-fluid spb-container' id='mdsprocedures-menu'>
               <h1>Sana Protocol Builder</h1>
           </header>
 
@@ -14,7 +14,7 @@ class App extends React.Component {
               {this.props.children}
           </div>
 
-          <footer id="main-footer">
+          <footer id='main-footer'>
               <p>
                   Copyright &copy; 2015-2017 Sana Protocol Builder
               </p>
