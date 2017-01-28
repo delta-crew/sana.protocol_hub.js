@@ -26,7 +26,7 @@ class HomePage extends React.Component {
           <a href='/sync' className='sync-btn' className='btn btn-secondary'>
               <span className='glyphicon glyphicon-cloud' aria-hidden='true'></span>Sync
           </a>
-          <a href='' id='import-btn' className='btn btn-success'>
+          <a href='/import' id='import-btn' className='btn btn-success'>
               <span className='glyphicon glyphicon-floppy-disk' aria-hidden='true'></span>Import
           </a>
       </div>
