@@ -6,6 +6,8 @@ import App from '../../app/components/App';
 import SyncPage from '../../app/components/SyncPage';
 import HomePage from '../../app/components/HomePage';
 
+require('../styles/main.less');
+
 ReactDOM.render((
   <Router history={browserHistory}>
       <Route component={App}>
