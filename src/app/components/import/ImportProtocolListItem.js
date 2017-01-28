@@ -2,8 +2,8 @@ import React from 'react';
 
 class ImportProtocolListItem extends React.Component {
   render() {
-    var disabled = this.props.imported;
-    var importText = this.props.imported ? "Imported" : "Import";
+    let disabled = this.props.imported;
+    let importText = this.props.imported ? "Imported" : "Import";
 
     return (
       <div className="import-protocol-list-item">
