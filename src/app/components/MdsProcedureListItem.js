@@ -5,7 +5,7 @@ class MdsProcedureListItem extends React.Component {
     var className = this.props.selected ? "mdsprocedure-item-selected" : "mdsprocedure-item";
 
     return (
-      <div class={className}>
+      <div className={className}>
           <h3>{this.props.name}</h3>
       </div>
     );

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import MdsProcedureListToolbar from './MdsProcedureListToolbar';
 import MdsProcedureListItem from './MdsProcedureListItem';
 
@@ -8,7 +9,7 @@ class MdsList extends React.Component {
       <div id='mds-list'>
           <h2>MDS's</h2>
           <MdsProcedureListToolbar />
-          <div class='mdsprocedure-item-group'>
+          <div className='mdsprocedure-item-group'>
               <MdsProcedureListItem name='MDS 1' selected={true} />
               <MdsProcedureListItem name='MDS 2' selected={false} />
               <MdsProcedureListItem name='MDS 3' selected={false} />

@@ -1,9 +1,6 @@
 import React from 'react';
 
-import MdsList from './MdsList';
-import ProcedureList from './ProcedureList';
-
-class SyncPage extends React.Component {
+class UserManagementPage extends React.Component {
   render() {
     return (
       <div className="row">
@@ -29,4 +26,4 @@ class SyncPage extends React.Component {
   }
 }
 
-module.exports = SyncPage;
+module.exports = UserManagementPage;
