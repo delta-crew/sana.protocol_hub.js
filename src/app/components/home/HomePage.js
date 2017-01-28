@@ -5,10 +5,11 @@ import HomeProcedureList from './HomeProcedureList';
 class HomePage extends React.Component {
   render() {
     return (
-      <div>
+      <div className="row">
+        <div className="col-xs-8">
           <div className='dropdown'>
-              <a href='#' className='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>
-                  User<span className='caret'></span>
+              <a href='#' className='dropdown-toggle btn btn-primary'>
+                  User <span className='caret'></span>
               </a>
               <ul className='dropdown-menu'>
                   <li><a>User</a></li>
@@ -22,13 +23,18 @@ class HomePage extends React.Component {
           </div>
 
           <HomeProcedureList />
+        </div>
 
-          <a href='/sync' className='sync-btn' className='btn btn-secondary'>
-              <span className='glyphicon glyphicon-cloud' aria-hidden='true'></span>Sync
+        <div className="col-xs-2">
+          <a href='/sync' className='sync-btn' className='btn btn-default btn-block'>
+            <span className='glyphicon glyphicon-cloud' aria-hidden='true'></span> Sync
           </a>
-          <a href='/import' id='import-btn' className='btn btn-success'>
-              <span className='glyphicon glyphicon-floppy-disk' aria-hidden='true'></span>Import
+        </div>
+        <div className="col-xs-2">
+          <a href='/import' id='import-btn' className='btn btn-success btn-block'>
+            <span className='glyphicon glyphicon-floppy-disk' aria-hidden='true'></span> Import
           </a>
+        </div>
       </div>
     );
   }
