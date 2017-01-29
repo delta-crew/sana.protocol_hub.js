@@ -8,6 +8,8 @@ import SyncPage from '../../app/components/sync/SyncPage';
 import ImportPage from '../../app/components/import/ImportPage';
 import SearchResultsPage from '../../app/components/search/SearchResultsPage';
 import ProtocolViewPage from '../../app/components/protocol-view/ProtocolViewPage';
+import MemberManagementPage from '../../app/components/settings/members/MemberManagementPage';
+import GroupManagementPage from '../../app/components/settings/groups/GroupManagementPage';
 
 require('../styles/main.less');
 
@@ -19,6 +21,8 @@ ReactDOM.render((
           <Route path='/sync' component={SyncPage} />
           <Route path='/import' component={ImportPage} />
           <Route path='/protocol/:protocolId' component={ProtocolViewPage} />
+          <Route path='/settings/members' component={MemberManagementPage} />
+          <Route path='/settings/groups' component={GroupManagementPage} />
       </Route>
   </Router>
 ), document.getElementById('app-root'));
