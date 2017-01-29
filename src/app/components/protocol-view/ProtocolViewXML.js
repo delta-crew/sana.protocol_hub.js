@@ -17,22 +17,41 @@ class ProtocolViewXML extends React.Component {
     let revisionSwitcher = null;
     if (this.props.revision !== CURRENT_REVISION) {
       revisionSwitcher =
-        <div id='protocol-view-xml-revision-switcher'>
-            <a href='#' onClick={this.viewCurrent} >View current</a>
-        </div>;
+        <a href='#' onClick={this.viewCurrent} >View current</a>
     }
 
     return (
-      <div id='protocol-view-xml-container'>
-          <div id='protocol-view-xml-current-revision'>
-              Viewing {this.props.revision}
+      <div className='protocol-view-xml-container'>
+
+        <div className='row'>
+          <div className='col-lg-12'>
+
+            <div className='protocol-view-xml-revision-container'>
+              <span className='protocol-view-xml-current-revision'>
+                Viewing {this.props.revision}
+              </span>
+
+              <span className='protocol-view-xml-revision-switcher'>
+                {revisionSwitcher}
+              </span>
+            </div>
+
           </div>
-          {revisionSwitcher}
-          <div id='protocol-view-xml-body'>
+        </div>
+
+
+        <div className='row'>
+          <div className='col-lg-12'>
+
+            <div className='protocol-view-xml-body'>
               <pre><code>
-                  "Protocol Content"
+                {"Protocol content " + this.props.revision}
               </code></pre>
+            </div>
+
           </div>
+        </div>
+
       </div>
     );
   }

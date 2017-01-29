@@ -40,12 +40,23 @@ class ProtocolViewBodySwitcher extends React.Component {
     }
 
     return (
-      <div id='protocol-view-body-switcher-container'>
-          <div id='protocol-view-body-switcher'>
-              <a href='#' onClick={this.switchViewXML}>XML</a>
-              <a href='#' onClick={this.switchViewHistory}>History</a>
-          </div>
-          {currentView}
+      <div className='protocol-view-body-switcher-container'>
+        <ul className='protocol-view-body-switcher nav nav-tabs'>
+
+          <li
+              role='presentation'
+              className={this.state.view === XML_VIEW ? 'active' : ''}>
+            <a href='#' onClick={this.switchViewXML}>XML</a>
+          </li>
+
+          <li
+              role='presentation'
+              className={this.state.view === HISTORY_VIEW ? 'active' : ''}>
+            <a href='#' onClick={this.switchViewHistory}>History</a>
+          </li>
+
+        </ul>
+        {currentView}
       </div>
     );
   }

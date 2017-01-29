@@ -16,13 +16,18 @@ class ProtocolViewHistoryListItem extends React.Component {
 
   render() {
     return (
-      <div className="protocol-view-history-list-item">
-          <span className="protocol-view-history-list-item-revision">
-              {this.props.revision}
-          </span>
-          <span className="protocol-view-history-list-item-link">
-              <a href='#' onClick={this.switchRevision}>View XML</a>
-          </span>
+      <div className='protocol-view-history-list-item row'>
+        <div className='col-xs-9'>
+          <div className='protocol-view-history-list-item-revision'>
+            {this.props.revision}
+          </div>
+        </div>
+
+        <div className='col-xs-3'>
+          <div className='protocol-view-history-list-item-link'>
+            <a href='#' onClick={this.switchRevision}>View XML</a>
+          </div>
+        </div>
       </div>
     );
   }
