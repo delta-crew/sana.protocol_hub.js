@@ -3,10 +3,9 @@ import React from 'react';
 import ProtocolViewXML from './ProtocolViewXML';
 import ProtocolViewHistory from './ProtocolViewHistory';
 
-let XML_VIEW = 'xml'
-let HISTORY_VIEW = 'history'
-
-let CURRENT_REVISION = 'current'
+export let XML_VIEW = 'xml'
+export let HISTORY_VIEW = 'history'
+export let CURRENT_REVISION = 'current'
 
 class ProtocolViewBodySwitcher extends React.Component {
   constructor(props) {
@@ -52,4 +51,4 @@ class ProtocolViewBodySwitcher extends React.Component {
   }
 }
 
-module.exports = ProtocolViewBodySwitcher;
+export default ProtocolViewBodySwitcher;

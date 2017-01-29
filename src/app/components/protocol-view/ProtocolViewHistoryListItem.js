@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { XML_VIEW } from './ProtocolViewBodySwitcher';
+
 class ProtocolViewHistoryListItem extends React.Component {
   constructor(props) {
     super(props);
@@ -9,7 +11,7 @@ class ProtocolViewHistoryListItem extends React.Component {
 
   switchRevision() {
     this.props.switchRevision(this.props.revision);
-    this.props.switchView('xml');
+    this.props.switchView(XML_VIEW);
   }
 
   render() {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import CURRENT_REVISION from './ProtocolViewBodySwitcher';
+import { CURRENT_REVISION } from './ProtocolViewBodySwitcher';
 
 class ProtocolViewXML extends React.Component {
   constructor(props) {
@@ -10,12 +10,12 @@ class ProtocolViewXML extends React.Component {
   }
 
   viewCurrent() {
-    this.props.switchRevision('current');
+    this.props.switchRevision(CURRENT_REVISION);
   }
 
   render() {
     let revisionSwitcher = null;
-    if (this.props.revision !== 'current') {
+    if (this.props.revision !== CURRENT_REVISION) {
       revisionSwitcher =
         <div id='protocol-view-xml-revision-switcher'>
             <a href='#' onClick={this.viewCurrent} >View current</a>
