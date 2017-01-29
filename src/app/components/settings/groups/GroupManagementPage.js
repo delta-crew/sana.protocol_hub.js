@@ -7,10 +7,10 @@ class GroupManagementPage extends React.Component {
   render() {
     return (
       <div className='group-management-page'>
-          <SettingsNav active='groups' />
+        <SettingsNav active='groups' />
 
-          <h2>Groups</h2>
-          <GroupList />
+        <h2>Groups</h2>
+        <GroupList />
       </div>
     );
   }

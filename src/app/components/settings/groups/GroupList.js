@@ -27,10 +27,10 @@ class GroupList extends React.Component {
 
     return (
       <div className='member-list'>
-          <form>
-              <input type='text' value={this.state.filter} onChange={this.handleFilter} />
-          </form>
-          {map(groups, (group) => <GroupListItem group={group} />)}
+        <form>
+          <input type='text' value={this.state.filter} onChange={this.handleFilter} />
+        </form>
+        {map(groups, (group) => <GroupListItem group={group} />)}
       </div>
     );
   }
