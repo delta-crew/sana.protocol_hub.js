@@ -5,10 +5,8 @@ class HomeProcedureListItem extends React.Component {
     return (
       <div className='protocol-list-item'>
         <span className='protocol-list-item-left'>
-          <span className='protocol-list-item-name'>
-            <h3>{this.props.name}</h3>
-          </span>
-          <a href='' className='home-protocol-edit'>Edit</a>
+          <a href={'protocol/' + this.props.protocolId} className='protocol-list-item-name'>{this.props.name}</a>
+          <a href='#' className='home-protocol-edit'>Edit</a>
         </span>
       </div>
     );
