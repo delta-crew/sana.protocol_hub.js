@@ -7,11 +7,11 @@ class ImportPage extends React.Component {
     return (
       <div className="row">
         <div className="col-lg-12">
-          <header id="import-header">
+          <header className="import-header">
             <h2>Builder Protocols</h2>
           </header>
 
-          <div id="import-protocols-container">
+          <div className="import-protocols-container">
             <ImportProtocolList />
           </div>
         </div>
