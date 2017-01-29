@@ -7,10 +7,10 @@ class MemberManagementPage extends React.Component {
   render() {
     return (
       <div className='member-management-page'>
-          <SettingsNav active='members' />
+        <SettingsNav active='members' />
 
-          <h2>Members</h2>
-          <MemberList />
+        <h2>Members</h2>
+        <MemberList />
       </div>
     );
   }

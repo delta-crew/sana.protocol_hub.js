@@ -6,10 +6,10 @@ class GroupPermissionsDropdown extends React.Component {
 
     return (
       <div className='member-list-item'>
-          <h4>{group.name}</h4>
-          <h4>{group.members.length} members</h4>
-          <a>Edit <span className='caret'></span></a>
-          <a>Remove</a>
+        <h4>{group.name}</h4>
+        <h4>{group.members.length} members</h4>
+        <a>Edit <span className='caret'></span></a>
+        <a>Remove</a>
       </div>
     );
   }

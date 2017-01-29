@@ -8,18 +8,18 @@ class HomePage extends React.Component {
       <div className="row">
         <div className="col-xs-8">
           <div className='dropdown'>
-              <a href='#' className='dropdown-toggle btn btn-primary'>
-                  User <span className='caret'></span>
-              </a>
-              <ul className='dropdown-menu'>
-                  <li><a>User</a></li>
-                  <li role='separator' className='divider'></li>
-                  <li><a>Orginization</a></li>
-              </ul>
+            <a href='#' className='dropdown-toggle btn btn-primary'>
+              User <span className='caret'></span>
+            </a>
+            <ul className='dropdown-menu'>
+              <li><a>User</a></li>
+              <li role='separator' className='divider'></li>
+              <li><a>Orginization</a></li>
+            </ul>
           </div>
 
           <div>
-              <h2>Your Protocols</h2>
+            <h2>Your Protocols</h2>
           </div>
 
           <HomeProcedureList />
