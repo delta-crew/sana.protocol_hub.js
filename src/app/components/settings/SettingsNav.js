@@ -9,7 +9,7 @@ class SettingsNav extends React.Component {
         <ul className='nav nav-pills nav-stacked'>
           <h4 className='heading'>Personal Settings</h4>
           <li role='presentation' className={active === 'profile' ? 'active' : ''}>
-            <a href='/settings/profile' className='settings-nav-item'>
+            <a href='#' className='settings-nav-item'>
               Profile
             </a>
           </li>
@@ -25,7 +25,7 @@ class SettingsNav extends React.Component {
             </a>
           </li>
           <li role='presentation' className={active === 'mds-links' ? 'active' : ''}>
-            <a href='/settings/mds-links' className='settings-nav-item'>
+            <a href='#' className='settings-nav-item'>
               MDS Links
             </a>
           </li>

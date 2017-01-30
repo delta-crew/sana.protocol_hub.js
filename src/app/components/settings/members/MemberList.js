@@ -19,15 +19,12 @@ class MemberList extends React.Component {
   }
 
   render() {
-    let users = ['mstobo', 'tophelders', 'jrogers'];
-
     return (
       <div className='member-list'>
         <form>
           <input type='text' value={this.state.filter} onChange={this.handleFilter} />
         </form>
-        <h2>Total {users.length}</h2>
-        {map(users, (user) => <MemberListItem member={user} />)}
+        {map(this.props.users, (user) => <MemberListItem member={user} />)}
       </div>
     );
   }
