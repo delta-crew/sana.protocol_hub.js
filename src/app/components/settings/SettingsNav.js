@@ -6,20 +6,30 @@ class SettingsNav extends React.Component {
 
     return (
       <div className='list-group settings-navbar'>
+        <ul className='nav nav-pills nav-stacked'>
           <h4 className='heading'>Personal Settings</h4>
-          <a href='/settings/profile' className={'settings-nav-item ' + active === 'profile ' ? 'active' : ''}>
+          <li role='presentation' className={active === 'profile' ? 'active' : ''}>
+            <a href='/settings/profile' className='settings-nav-item'>
               Profile
-          </a>
-          <h4 className='heading'>Orginization Settings</h4>
-          <a href='/settings/members' className={'settings-nav-item ' + active === 'members' ? 'active' : ''}>
+            </a>
+          </li>
+          <h4 className='heading'>Organization Settings</h4>
+          <li role='presentation' className={active === 'members' ? 'active' : ''}>
+            <a href='/settings/members' className='settings-nav-item'>
               Members
-          </a>
-          <a href='/settings/groups' className={'settings-nav-item ' + active === 'groups' ? 'active' : ''}>
+            </a>
+          </li>
+          <li role='presentation' className={active === 'groups' ? 'active' : ''}>
+            <a href='/settings/groups' className='settings-nav-item'>
               Groups
-          </a>
-          <a href='/settings/mds-links' className={'settings-nav-item ' + active === 'mds-links' ? 'active' : ''}>
+            </a>
+          </li>
+          <li role='presentation' className={active === 'mds-links' ? 'active' : ''}>
+            <a href='/settings/mds-links' className='settings-nav-item'>
               MDS Links
-          </a>
+            </a>
+          </li>
+        </ul>
       </div>
     );
   }

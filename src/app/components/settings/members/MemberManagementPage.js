@@ -6,11 +6,15 @@ import MemberList from './MemberList';
 class MemberManagementPage extends React.Component {
   render() {
     return (
-      <div className='member-management-page'>
-        <SettingsNav active='members' />
+      <div className='member-management-page row'>
+        <div className='col-xs-3'>
+          <SettingsNav active='members' />
+        </div>
 
-        <h2>Members</h2>
-        <MemberList />
+        <div className='col-xs-9'>
+          <h2>Members</h2>
+          <MemberList />
+        </div>
       </div>
     );
   }

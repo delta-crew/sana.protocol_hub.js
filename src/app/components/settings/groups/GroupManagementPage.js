@@ -6,11 +6,15 @@ import GroupList from './GroupList';
 class GroupManagementPage extends React.Component {
   render() {
     return (
-      <div className='group-management-page'>
-        <SettingsNav active='groups' />
+      <div className='group-management-page row'>
+        <div className='col-xs-3'>
+          <SettingsNav active='groups' />
+        </div>
 
-        <h2>Groups</h2>
-        <GroupList />
+        <div className='col-xs-9'>
+          <h2>Groups</h2>
+          <GroupList />
+        </div>
       </div>
     );
   }
