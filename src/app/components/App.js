@@ -39,7 +39,7 @@ class App extends React.Component {
 
           <div className='navbar-right'>
             <span className='glyphicon glyphicon-user user-icon'></span>
-            <a className='user-dropdown' href='#' role='button'>
+            <a className='user-dropdown' href='settings/members' role='button'>
               User <span className='caret'></span>
             </a>
             <NavDropdown />
