@@ -1,19 +1,21 @@
 import React from 'react';
 
-import MdsProcedureListToolbar from './MdsProcedureListToolbar';
-import MdsProcedureListItem from './MdsProcedureListItem';
+import MdsProtocolListToolbar from './MdsProtocolListToolbar';
+import MdsProtocolListItem from './MdsProtocolListItem';
 
 class MdsList extends React.Component {
   render() {
     return (
-      <div id='mds-list'>
-          <h2>MDS's</h2>
-          <MdsProcedureListToolbar />
-          <div className='mdsprocedure-item-group'>
-              <MdsProcedureListItem name='MDS 1' selected={true} />
-              <MdsProcedureListItem name='MDS 2' selected={false} />
-              <MdsProcedureListItem name='MDS 3' selected={false} />
+      <div className='mdsprotocol-list-outer'>
+        <div className='mdsprotocol-list-inner'>
+          <h2 className='mdsprotocol-list-title'>MDS's</h2>
+          <MdsProtocolListToolbar />
+          <div className='mdsprotocol-item-group'>
+            <MdsProtocolListItem name='MDS 1' selected={true} />
+            <MdsProtocolListItem name='MDS 2' selected={false} />
+            <MdsProtocolListItem name='MDS 3' selected={false} />
           </div>
+        </div>
       </div>
     );
   }
