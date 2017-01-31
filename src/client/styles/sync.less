@@ -1,0 +1,140 @@
+@import './constants';
+
+.mdsprotocol-heading{
+    overflow: hidden;
+
+    h2 {
+      margin-top: -5px
+    }
+
+    h2{
+        line-height: 40px;
+        float: left;
+    }
+}
+
+.mdsprotocol-list-container{
+  display: flex;
+  margin: 10px 0 15px 0;
+}
+
+.mdsprotocol-list-outer {
+  border: 1px solid @grey-border;
+  border-radius: 3px;
+  margin: 10px;
+  width: 50%;
+}
+
+.mdsprotocol-list-inner {
+  margin: 0 10px;
+}
+
+.mdsprotocol-item-group {
+  margin-top: 0;
+  margin: auto;
+  padding: 15px;
+}
+
+.mdsprotocol-list-title {
+  text-align: center;
+}
+
+.mdsprotocol-item {
+  border: 1px solid @grey-border;
+  border-radius: 3px;
+  margin-top: 5px;
+  padding: 5px 30px;
+}
+
+.mdsprotocol-item-selected {
+  border: 1px solid @grey-border;
+  border-radius: 3px;
+  margin-top: 5px;
+  background: @grey-bg-light;
+  padding: 5px 30px;
+}
+
+.mdsprotocol-buttons {
+  float: right;
+}
+
+.mdsprotocol-list-toolbar {
+}
+
+.mdsprotocol-list-toolbar-form {
+  display: inline-block;
+  width: 75%;
+  padding: 0 20px;
+}
+
+.mdsprotocol-list-toolbar-dropdown {
+  display: inline-block;
+}
+
+.mdsprotocol-item:hover {
+  background: @grey-bg-light;
+}
+
+nav#mdsprocedure-list-toolbar{
+    border: 1px solid @grey-border;
+    border-radius: 3px;
+    display: flex;
+    margin: 0;
+
+    form{
+        flex: 1;
+        margin: 10px;
+        padding: 0;
+
+        div.form-group{
+            margin: 0;
+
+            input#procedure-filter{
+                border-radius: 3px;
+                box-shadow: none;
+                box-sizing: border-box;
+                height: 30px;
+                padding: 5px;
+            }
+        }
+    }
+
+    div.dropdown{
+        &.open{
+            background: @grey-bg;
+        }
+
+        a.dropdown-toggle{
+            box-sizing: border-box;
+            display: block;
+            height: 50px;
+            line-height: 40px;
+            padding: 5px 20px;
+            text-decoration: none;
+
+            &:hover{
+                background: @grey-bg-light;
+            }
+        }
+
+        ul.dropdown-menu{
+            border-top-right-radius: 0;
+            border-top-left-radius: 0;
+            left: auto; right: 0;
+            margin-top: 0;
+
+            a{
+                cursor: pointer;
+
+                &.active{
+                    background: @link-blue;
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    .navbar-right{
+        margin-right: 0;
+    }
+}
