@@ -3,12 +3,12 @@ import React from 'react';
 import ProtocolListToolbar from './ProtocolListToolbar';
 import ProtocolListItem from './ProtocolListItem';
 
-class ProtocolList extends React.Component {
+class MdsList extends React.Component {
   render() {
     return (
       <div className='mdsprotocol-list-outer'>
         <div className='mdsprotocol-list-inner'>
-          <h2 className='mdsprotocol-list-title'>Your Protocols</h2>
+          <h2 className='mdsprotocol-list-title'>Synced Protocols</h2>
           <ProtocolListToolbar />
           <div className='mdsprotocol-item-group'>
             {this.props.protocols.map((protocol) => <ProtocolListItem name={protocol} onClick={this.props.onItemClick}/>)}
@@ -19,4 +19,4 @@ class ProtocolList extends React.Component {
   }
 }
 
-module.exports = ProtocolList;
+module.exports = MdsList;

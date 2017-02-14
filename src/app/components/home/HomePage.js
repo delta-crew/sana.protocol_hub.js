@@ -1,6 +1,6 @@
 import React from 'react';
 
-import HomeProcedureList from './HomeProcedureList';
+import HomeProtocolList from './HomeProtocolList';
 
 class HomePage extends React.Component {
   render() {
@@ -27,7 +27,7 @@ class HomePage extends React.Component {
           </div>
 
           <div className='col-xs-2'>
-            <a href='/sync' className='sync-btn' className='btn btn-default btn-block'>
+            <a href='/mds' className='sync-btn' className='btn btn-default btn-block'>
               <span className='glyphicon glyphicon-cloud' aria-hidden='true'></span> Sync
             </a>
           </div>
@@ -41,7 +41,7 @@ class HomePage extends React.Component {
 
         <div className='row'>
           <div className='col-lg-12'>
-            <HomeProcedureList />
+            <HomeProtocolList />
           </div>
         </div>
       </div>
