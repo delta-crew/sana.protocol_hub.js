@@ -1,6 +1,6 @@
 import React from 'react';
 
-class MdsProtocolListToolbar extends React.Component {
+class ProtocolListToolbar extends React.Component {
   render() {
     return (
       <nav className='mdsprotocol-list-toolbar'>
@@ -27,4 +27,4 @@ class MdsProtocolListToolbar extends React.Component {
   }
 }
 
-module.exports = MdsProtocolListToolbar;
+module.exports = ProtocolListToolbar;

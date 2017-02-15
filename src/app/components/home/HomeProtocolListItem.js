@@ -1,6 +1,6 @@
 import React from 'react';
 
-class HomeProcedureListItem extends React.Component {
+class HomeProtocolListItem extends React.Component {
   render() {
     return (
       <div className='protocol-list-item'>
@@ -13,4 +13,4 @@ class HomeProcedureListItem extends React.Component {
   }
 }
 
-module.exports = HomeProcedureListItem;
+module.exports = HomeProtocolListItem;
