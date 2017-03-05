@@ -1,0 +1,6 @@
+export default {
+  CREATE_MDS: 'CREATE_MDS',
+  UPDATE_MDS: 'UPDATE_MDS',
+  DELETE_MDS: 'DELETE_MDS',
+  FETCH_MDS: 'FETCH_MDS',
+}

@@ -1,8 +1,16 @@
 import React from 'react';
 
+import ProtocolStore from '../../stores/ProtocolStore';
 import HomeProtocolList from './HomeProtocolList';
 
 class HomePage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      protocols: ProtocolStore.getAll()
+    }
+  }
+
   render() {
     return (
       <div className='home-page'>
@@ -15,7 +23,7 @@ class HomePage extends React.Component {
               <ul className='dropdown-menu'>
                 <li><a>User</a></li>
                 <li role='separator' className='divider'></li>
-                <li><a>Orginization</a></li>
+                <li><a>Organization</a></li>
               </ul>
             </div>
           </div>
@@ -41,7 +49,7 @@ class HomePage extends React.Component {
 
         <div className='row'>
           <div className='col-lg-12'>
-            <HomeProtocolList />
+            <HomeProtocolList protocols={this.state.protocols}/>
           </div>
         </div>
       </div>

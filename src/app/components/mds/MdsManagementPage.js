@@ -1,8 +1,16 @@
 import React from 'react';
 
+import MdsStore from '../../stores/MdsStore';
 import MdsList from './MdsList';
 
 class MdsManagementPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      mds: MdsStore.getAll()
+    }
+  }
+
   render() {
     return (
       <div className='mds-page'>
@@ -14,7 +22,7 @@ class MdsManagementPage extends React.Component {
 
         <div className='row'>
           <div className='col-lg-12'>
-            <MdsList />
+            <MdsList mds={this.state.mds}/>
           </div>
         </div>
       </div>
