@@ -1,5 +1,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import MdsActions from '../actions/MdsActions';
+import StoreActions from '../actions/StoreActions';
+import request from 'superagent-bluebird-promise';
 import { EventEmitter } from 'events';
 
 let _mds = [{
@@ -7,6 +9,7 @@ let _mds = [{
   owner: '',
   name: 'mds 1',
   link: 'http://mds1.com/api',
+  synced_protocols: [],
 }];
 
 function _addMds(mds) {
@@ -27,10 +30,6 @@ function _removeMds(id) {
   _mds.splice(i, 1);
 }
 
-function _fetchMds(page) {
-  // TODO API call
-}
-
 class MdsStore extends EventEmitter {
   constructor() {
     super();
@@ -41,16 +40,23 @@ class MdsStore extends EventEmitter {
     return _mds;
   }
 
+  get(id) {
+    let i = _mds.findIndex((mds) => {
+      return mds.id === id;
+    });
+    return _mds[i];
+  }
+
   emitChange() {
-    this.emit(CHANGE_EVENT);
+    this.emit(StoreActions.CHANGE_EVENT);
   }
 
   addChangeListener(cb) {
-    this.on(CHANGE_EVENT, cb);
+    this.on(StoreActions.CHANGE_EVENT, cb);
   }
 
   removeChangeListener(cb) {
-    this.removeListener(CHANGE_EVENT, cb);
+    this.removeListener(StoreActions.CHANGE_EVENT, cb);
   }
 
   dispatcherCallback(action) {
@@ -72,6 +78,14 @@ class MdsStore extends EventEmitter {
         this.emitChange();
         break;
     }
+  }
+
+  fetchMds() {
+    // TODO API call
+  }
+
+  fetchSyncedProtocols(id) {
+    // TODO API call
   }
 }
 

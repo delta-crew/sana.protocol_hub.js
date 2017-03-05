@@ -11,6 +11,22 @@ class HomePage extends React.Component {
     }
   }
 
+  _onLoad() {
+    let results = ProtocolStore.getAll();
+    this.setState({
+      protocols: protocols
+    });
+  }
+
+  componentWillMount() {
+    ProtocolStore.addChangeListener(this._onLoad);
+    // fetch Protcols
+  }
+
+  componentWillUnmount() {
+    ProtocolStore.removeChangeListener(this._onLoad);
+  }
+
   render() {
     return (
       <div className='home-page'>

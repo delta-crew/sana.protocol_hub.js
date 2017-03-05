@@ -1,5 +1,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import ProtocolActions from '../actions/ProtocolActions';
+import StoreActions from '../actions/StoreActions';
+import request from 'superagent-bluebird-promise';
 import { EventEmitter } from 'events';
 
 let _protocols = [{
@@ -8,6 +10,7 @@ let _protocols = [{
   content: '',
   owner: '',
   name: 'test protocol 1',
+  private: true,
 }];
 
 function _addProtocol(protocol) {
@@ -28,10 +31,6 @@ function _removeProtocol(id) {
   _protocols.splice(i, 1);
 }
 
-function _fetchProtocols(page) {
-  // TODO API call
-}
-
 class ProtocolStore extends EventEmitter {
   constructor() {
     super();
@@ -42,16 +41,33 @@ class ProtocolStore extends EventEmitter {
     return _protocols;
   }
 
+  get(id) {
+    let i = _protocols.findIndex((protocol) => {
+      return protocol.id === id;
+    });
+
+    return _protocols[i];
+  }
+
+  getAllVersions(id) {
+    let versions = [];
+    _protocols.forEach((protocol) => {
+      if(protocol.id === id) versions.push(protocol);
+    });
+
+    return versions;
+  }
+
   emitChange() {
     this.emit(CHANGE_EVENT);
   }
 
   addChangeListener(cb) {
-    this.on(CHANGE_EVENT, cb);
+    this.on(StoreActions.CHANGE_EVENT, cb);
   }
 
   removeChangeListener(cb) {
-    this.removeListener(CHANGE_EVENT, cb);
+    this.removeListener(StoreActions.CHANGE_EVENT, cb);
   }
 
   dispatcherCallback(action) {
@@ -73,6 +89,10 @@ class ProtocolStore extends EventEmitter {
         this.emitChange();
         break;
     }
+  }
+
+  fetchProtocols() {
+    // TODO API call
   }
 }
 

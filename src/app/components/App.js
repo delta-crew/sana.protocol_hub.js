@@ -23,7 +23,7 @@ class App extends React.Component {
 
   handleSearch(event) {
     event.preventDefault();
-    browserHistory.push('/search?' + this.state.query);
+    browserHistory.push('/search?query=' + this.state.query);
   }
 
   render() {
