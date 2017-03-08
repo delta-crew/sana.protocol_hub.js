@@ -4,14 +4,25 @@ import StoreActions from '../actions/StoreActions';
 import request from 'superagent-bluebird-promise';
 import { EventEmitter } from 'events';
 
-let _protocols = [{
-  id: 1,
-  version: 1,
-  content: '',
-  owner: '',
-  name: 'test protocol 1',
-  private: true,
-}];
+let _protocols = [
+  {
+    id: 1,
+    revision: 1,
+    content: '<BODY>CONTENT</BODY>',
+    owner: 'delta',
+    name: 'test protocol 1',
+    private: true,
+    revision_date: '2017-01-01',
+  }, {
+    id: 1,
+    revision: 2,
+    content: '<BODY>OLD CONTENT</BODY>',
+    owner: 'delta',
+    name: 'test protocol 1',
+    private: true,
+    revision_date: '2016-12-31',
+  },
+];
 
 function _addProtocol(protocol) {
   _protocols.push(protocol);
@@ -42,20 +53,17 @@ class ProtocolStore extends EventEmitter {
   }
 
   get(id) {
-    let i = _protocols.findIndex((protocol) => {
-      return protocol.id === id;
-    });
-
-    return _protocols[i];
+    let revisions = getAllRevisions(id);
+    return revisions[0];
   }
 
-  getAllVersions(id) {
-    let versions = [];
+  getAllRevisions(id) {
+    let revisions = [];
     _protocols.forEach((protocol) => {
-      if(protocol.id === id) versions.push(protocol);
+      if(protocol.id === id) revisions.push(protocol);
     });
 
-    return versions;
+    return revisions;
   }
 
   emitChange() {

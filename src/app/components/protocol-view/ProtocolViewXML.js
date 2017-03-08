@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { CURRENT_REVISION } from './ProtocolViewBodySwitcher';
-
 class ProtocolViewXML extends React.Component {
   constructor(props) {
     super(props);
@@ -10,12 +8,12 @@ class ProtocolViewXML extends React.Component {
   }
 
   viewCurrent() {
-    this.props.switchRevision(CURRENT_REVISION);
+    this.props.switchRevision(this.props.currentRevision);
   }
 
   render() {
     let revisionSwitcher = null;
-    if (this.props.revision !== CURRENT_REVISION) {
+    if (this.props.revision.revision_date !== this.props.currentRevision.revision_date) {
       revisionSwitcher =
         <a href='#' onClick={this.viewCurrent} >View current</a>
     }
@@ -28,7 +26,7 @@ class ProtocolViewXML extends React.Component {
 
             <div className='protocol-view-xml-revision-container'>
               <span className='protocol-view-xml-current-revision'>
-                Viewing {this.props.revision}
+                Viewing {this.props.revision.revision_date}
               </span>
 
               <span className='protocol-view-xml-revision-switcher'>
@@ -45,7 +43,7 @@ class ProtocolViewXML extends React.Component {
 
             <div className='protocol-view-xml-body'>
               <pre><code>
-                {"Protocol content " + this.props.revision}
+                {this.props.revision.content}
               </code></pre>
             </div>
 

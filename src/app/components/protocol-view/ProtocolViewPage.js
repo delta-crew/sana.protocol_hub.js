@@ -8,15 +8,15 @@ class ProtocolViewPage extends React.Component {
     super(props);
 
     this.state = {
-      versions: []
+      revisions: ProtocolStore.getAllRevisions(1),
     }
   }
 
   _onLoad() {
-    let versions = ProtocolStore.getAllVersions(this.props.params.protocolId);
+    let revisions = ProtocolStore.getAllRevisions(this.props.params.protocolId);
 
     this.setState({
-      versions: versions,
+      revisions: revisions,
     })
   }
 
@@ -30,13 +30,13 @@ class ProtocolViewPage extends React.Component {
   }
 
   render() {
-    let versions = this.state.versions;
-    if(!versions.length) {
+    let revisions = this.state.revisions;
+    if(!revisions.length) {
       return <div>Oops! Looks like this protocol doesn't exist</div>
     }
 
     let scope = null;
-    if (versions[0].private) {
+    if (revisions[0].private) {
       scope = <span className="protocol-view-scope label label-warning">Private</span>
     } else {
       scope = <span className="protocol-view-scope label label-info">Public</span>
@@ -50,7 +50,7 @@ class ProtocolViewPage extends React.Component {
             <div className='protocol-view-header vertical-align'>
               <span className='protocol-list-item-name'>
                 {//'delta / protocol' + this.props.params.protocolId
-                  protocol[0].name
+                  revisions[0].owner + ' / ' + revisions[0].name
                 }
               </span>
 
@@ -68,7 +68,7 @@ class ProtocolViewPage extends React.Component {
           <div className='col-lg-12'>
 
             <div className='protocol-view-body'>
-              <ProtocolViewBodySwitcher />
+              <ProtocolViewBodySwitcher revisions={revisions} currentRevision={revisions[0]}/>
             </div>
 
           </div>

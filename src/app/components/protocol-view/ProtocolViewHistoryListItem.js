@@ -19,7 +19,7 @@ class ProtocolViewHistoryListItem extends React.Component {
       <div className='protocol-view-history-list-item row'>
         <div className='col-xs-9'>
           <div className='protocol-view-history-list-item-revision'>
-            {this.props.revision}
+            {this.props.revision.revision_date}
           </div>
         </div>
 
