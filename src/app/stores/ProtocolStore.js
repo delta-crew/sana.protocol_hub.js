@@ -12,7 +12,7 @@ let _protocols = [
     owner: 'delta',
     name: 'test protocol 1',
     private: true,
-    revision_date: '2017-01-01',
+    revision_date: 10,
   }, {
     id: 1,
     revision: 2,
@@ -20,7 +20,7 @@ let _protocols = [
     owner: 'delta',
     name: 'test protocol 1',
     private: true,
-    revision_date: '2016-12-31',
+    revision_date: 9,
   },
 ];
 
@@ -52,6 +52,18 @@ class ProtocolStore extends EventEmitter {
     return _protocols;
   }
 
+  getLatest() {
+    let latest = {};
+    this.getAll().forEach((protocol) => {
+      let id = protocol.id;
+
+      if(!latest[id] || latest[id].revision_date < protocol.revision_date) {
+        latest[id] = protocol;
+      }
+    });
+    return Object.values(latest);
+  }
+
   get(id) {
     let revisions = getAllRevisions(id);
     return revisions[0];
@@ -59,7 +71,7 @@ class ProtocolStore extends EventEmitter {
 
   getAllRevisions(id) {
     let revisions = [];
-    _protocols.forEach((protocol) => {
+    this.getAll().forEach((protocol) => {
       if(protocol.id === id) revisions.push(protocol);
     });
 
