@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
 
-import NavDropdown from './NavDropdown';
-
 //import config from '../../../config/Linkpp';
 
 class Linkpp extends React.Component {
@@ -27,6 +25,23 @@ class Linkpp extends React.Component {
   }
 
   render() {
+    let logged_in = true;
+    let nav_settings = <div className='navbar-right'><a className='login-button' href='' >Login</a></div>;
+
+    if(logged_in) {
+      nav_settings = (
+        <div className='navbar-right'>
+          <span className='glyphicon glyphicon-user user-icon'></span>
+          <Link className='user-settings' to='settings/members' role='button'>
+            Username
+          </Link>
+          <Link className='user-logout' to='#' role='button'>
+            Logout
+          </Link>
+        </div>
+      );
+    }
+
     return (
       <div>
         <nav className='navbar'>
@@ -37,13 +52,7 @@ class Linkpp extends React.Component {
             </form>
           </div>
 
-          <div className='navbar-right'>
-            <span className='glyphicon glyphicon-user user-icon'></span>
-            <Link className='user-dropdown' to='settings/members' role='button'>
-              User <span className='caret'></span>
-            </Link>
-            <NavDropdown />
-          </div>
+          {nav_settings}
         </nav>
 
         <header className='title-bar'>

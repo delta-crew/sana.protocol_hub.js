@@ -4,7 +4,7 @@ import OrganizationStore from '../stores/OrganizationStore';
 import OrganizationActionCreator from '../actionCreators/OrganizationActionCreator';
 import Dropdown from './Dropdown';
 
-class OrgSwitcher extends React.Component {
+class OrganizationSwitcher extends React.Component {
   constructor(props) {
     super(props);
 
@@ -56,4 +56,4 @@ class OrgSwitcher extends React.Component {
   }
 }
 
-export default OrgSwitcher;
+export default OrganizationSwitcher;

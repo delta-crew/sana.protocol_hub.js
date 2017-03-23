@@ -37,9 +37,9 @@ class Dropdown extends React.Component {
   }
 
   render() {
-    return <div style={{padding:'100px'}} className={"dropdown-container" + (this.state.listVisible ? " show" : "")}>
+    return <div className={"dropdown-container" + (this.state.listVisible ? " show" : "")}>
       <div className={"dropdown-display" + (this.state.listVisible ? " clicked": "")} onClick={this.show}>
-        <span>{this.state.selected.name}</span>
+        <span>{this.state.selected.name} <span className='caret'></span></span>
         <i className="fa fa-angle-down"></i>
       </div>
       <div className="dropdown-list">

@@ -2,7 +2,7 @@ import React from 'react';
 
 import ProtocolStore from '../../stores/ProtocolStore';
 import OrganizationStore from '../../stores/OrganizationStore';
-import OrgSwitcher from '../OrgSwitcher';
+import OrganizationSwitcher from '../OrganizationSwitcher';
 import HomeProtocolList from './HomeProtocolList';
 
 class HomePage extends React.Component {
@@ -34,7 +34,7 @@ class HomePage extends React.Component {
       <div className='home-page'>
         <div className='row'>
           <div className='col-lg-12'>
-            <OrgSwitcher />
+            <OrganizationSwitcher />
           </div>
         </div>
 
