@@ -1,18 +1,36 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
 
-//import config from '../../../config/Linkpp';
+import UserStore from '../stores/UserStore';
 
-class Linkpp extends React.Component {
+//import config from '../../../config/app';
+
+class App extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      query: ''
+      query: '',
+      logged_in: UserStore.loggedIn(),
     };
 
+    this._onLoad = this._onLoad.bind(this);
     this.handleQuery = this.handleQuery.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+  }
+
+  _onLoad() {
+    this.setState({
+      logged_in: UserStore.loggedIn(),
+    });
+  }
+
+  componentWillMount() {
+    UserStore.addChangeListener(this._onLoad);
+  }
+
+  componentWillUnmount() {
+    UserStore.removeChangeListener(this._onLoad);
   }
 
   handleQuery(event) {
@@ -25,17 +43,16 @@ class Linkpp extends React.Component {
   }
 
   render() {
-    let logged_in = true;
-    let nav_settings = <div className='navbar-right'><a className='login-button' href='' >Login</a></div>;
+    let nav_settings = <div className='navbar-right'><a className='nav-button' href='' >Login</a></div>;
 
-    if(logged_in) {
+    if(this.state.logged_in) {
       nav_settings = (
         <div className='navbar-right'>
           <span className='glyphicon glyphicon-user user-icon'></span>
-          <Link className='user-settings' to='settings/members' role='button'>
-            Username
+          <Link className='user-settings nav-button' to='settings/members' role='button'>
+            {UserStore.getUser().name}
           </Link>
-          <Link className='user-logout' to='#' role='button'>
+          <Link className='nav-button' to='#' role='button'>
             Logout
           </Link>
         </div>
@@ -59,7 +76,7 @@ class Linkpp extends React.Component {
           <h1 className='sana-logo'>Sana Protocol Hub</h1>
         </header>
 
-        <div className='container-fluid Linkpp'>
+        <div className='container-fluid App'>
           {this.props.children}
         </div>
 
@@ -76,4 +93,4 @@ class Linkpp extends React.Component {
   }
 }
 
-module.exports = Linkpp;
+module.exports = App;
