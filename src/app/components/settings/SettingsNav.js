@@ -24,11 +24,6 @@ class SettingsNav extends React.Component {
               Groups
             </a>
           </li>
-          <li role='presentation' className={active === 'mds-links' ? 'active' : ''}>
-            <a href='#' className='settings-nav-item'>
-              MDS Links
-            </a>
-          </li>
         </ul>
       </div>
     );

@@ -29,7 +29,8 @@ class SearchResultsList extends React.Component {
         </div>
 
         {map(this.props.results, (protocol, i) =>
-          <SearchResultsListItem key={i} protocol={protocol} />)}
+          <SearchResultsListItem key={i} protocol={protocol} />
+        )}
       </div>
     );
   }

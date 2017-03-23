@@ -3,16 +3,15 @@ import React from 'react';
 import ProtocolViewXML from './ProtocolViewXML';
 import ProtocolViewHistory from './ProtocolViewHistory';
 
-export let XML_VIEW = 'xml'
-export let HISTORY_VIEW = 'history'
-export let CURRENT_REVISION = 'current'
+export let XML_VIEW = 'xml';
+export let HISTORY_VIEW = 'history';
 
 class ProtocolViewBodySwitcher extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       view: XML_VIEW,
-      revision: CURRENT_REVISION,
+      revision: props.revisions[0],
     }
     this.switchViewXML = this.switchView.bind(this, XML_VIEW);
     this.switchViewHistory = this.switchView.bind(this, HISTORY_VIEW);
@@ -31,10 +30,12 @@ class ProtocolViewBodySwitcher extends React.Component {
     if (this.state.view === XML_VIEW) {
       currentView =
         <ProtocolViewXML revision={this.state.revision}
+            currentRevision={this.props.currentRevision}
             switchRevision={this.switchRevision.bind(this)} />
     } else if (this.state.view == HISTORY_VIEW) {
       currentView =
         <ProtocolViewHistory
+            revisions={this.props.revisions}
             switchRevision={this.switchRevision.bind(this)}
             switchView={this.switchView.bind(this)} />
     }

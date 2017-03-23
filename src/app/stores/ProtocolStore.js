@@ -1,14 +1,28 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import ProtocolActions from '../actions/ProtocolActions';
+import StoreActions from '../actions/StoreActions';
+import request from 'superagent-bluebird-promise';
 import { EventEmitter } from 'events';
 
-let _protocols = [{
-  id: 1,
-  version: 1,
-  content: '',
-  owner: '',
-  name: 'test protocol 1',
-}];
+let _protocols = [
+  {
+    id: 1,
+    revision: 1,
+    content: '<BODY>CONTENT</BODY>',
+    owner: 'delta',
+    name: 'test protocol 1',
+    private: true,
+    revision_date: 10,
+  }, {
+    id: 1,
+    revision: 2,
+    content: '<BODY>OLD CONTENT</BODY>',
+    owner: 'delta',
+    name: 'test protocol 1',
+    private: true,
+    revision_date: 9,
+  },
+];
 
 function _addProtocol(protocol) {
   _protocols.push(protocol);
@@ -28,10 +42,6 @@ function _removeProtocol(id) {
   _protocols.splice(i, 1);
 }
 
-function _fetchProtocols(page) {
-  // TODO API call
-}
-
 class ProtocolStore extends EventEmitter {
   constructor() {
     super();
@@ -42,16 +52,42 @@ class ProtocolStore extends EventEmitter {
     return _protocols;
   }
 
+  getLatest() {
+    let latest = {};
+    this.getAll().forEach((protocol) => {
+      let id = protocol.id;
+
+      if(!latest[id] || latest[id].revision_date < protocol.revision_date) {
+        latest[id] = protocol;
+      }
+    });
+    return Object.values(latest);
+  }
+
+  get(id) {
+    let revisions = getAllRevisions(id);
+    return revisions[0];
+  }
+
+  getAllRevisions(id) {
+    let revisions = [];
+    this.getAll().forEach((protocol) => {
+      if(protocol.id === id) revisions.push(protocol);
+    });
+
+    return revisions;
+  }
+
   emitChange() {
     this.emit(CHANGE_EVENT);
   }
 
   addChangeListener(cb) {
-    this.on(CHANGE_EVENT, cb);
+    this.on(StoreActions.CHANGE_EVENT, cb);
   }
 
   removeChangeListener(cb) {
-    this.removeListener(CHANGE_EVENT, cb);
+    this.removeListener(StoreActions.CHANGE_EVENT, cb);
   }
 
   dispatcherCallback(action) {
@@ -73,6 +109,10 @@ class ProtocolStore extends EventEmitter {
         this.emitChange();
         break;
     }
+  }
+
+  fetchProtocols() {
+    // TODO API call
   }
 }
 

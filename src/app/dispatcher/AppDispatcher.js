@@ -24,11 +24,10 @@ class AppDispatcher {
     delete _callbacks[token];
   }
 
-  notify(token, action) {
-    if(!_callbacks[token]) {
-      return;
-    }
-    _callbacks[token](action);
+  notify(action) {
+    Object.keys(_callbacks).forEach((token) => {
+      _callbacks[token](action);
+    });
   }
 }
 
