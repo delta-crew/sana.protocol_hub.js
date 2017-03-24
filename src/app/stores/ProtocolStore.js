@@ -112,7 +112,29 @@ class ProtocolStore extends EventEmitter {
   }
 
   fetchProtocols() {
-    // TODO API call
+    return request.get(`/protocols/`);
+  }
+
+  fetchPublicProtocols() {
+    return request.get(`/protocols/public/`);
+  }
+
+  updateProtocol(id, isPublic) {
+    return request.put(`/protocols/${id}`)
+      .send({ public: isPublic });
+  }
+
+  fetchOrganizationProtocols(id) {
+    return request.get(`/organizations/${id}/protocols/`);
+  }
+
+  addProtocolToOrganization(organizationId, protocolId) {
+    return request.post(`/organizations/${organizationId}/protocols/`)
+      .send({ protocolId });
+  }
+
+  removeProtocolFromOrganization(organizationId, protocolId) {
+    return request.delete(`/organizations/${organizationId}/protocols/${protocolId}`);
   }
 }
 

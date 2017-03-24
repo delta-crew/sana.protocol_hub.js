@@ -15,7 +15,7 @@ let _organizations = [
   },
 ];
 
-var _active_organization = {name: 'test1', id: 1};
+let _activeOrganization = { name: 'test1', id: 1 };
 
 function _addOrganization(organization) {
   _organizations.push(organization);
@@ -36,10 +36,8 @@ function _removeOrganization(id) {
 }
 
 function _switchActiveOrg(id) {
-  let i = _organizations.findIndex((organization) => {
-    return organization.id === id;
-  });
-  if(i > -1) _active_organization = _organizations[i];
+  const i = _organizations.findIndex(organization => organization.id === id);
+  if (i > -1) _activeOrganization = _organizations[i];
 }
 
 class OrganizationStore extends EventEmitter {
@@ -48,25 +46,24 @@ class OrganizationStore extends EventEmitter {
     this.dispatchToken = AppDispatcher.register(this.dispatcherCallback.bind(this));
   }
 
-  getAll() {
+  static getAll() {
     return _organizations;
   }
 
-  get(id) {
-    let i = _organizations.findIndex((organization) => {
-      return organization.id === id;
-    });
-    if(i > -1) return _organizations[i];
-    else return null;
+  static get(id) {
+    const i = _organizations.findIndex(organization => organization.id === id);
+    if (i > -1) return _organizations[i];
+    return null;
   }
 
-  getActiveOrg() {
-    return _active_organization;
+  static getActiveOrg() {
+    return _activeOrganization;
   }
 
   getGroups(id) {
-    let organization = get(id);
-    if(organization) return organization.id;
+    const organization = this.get(id);
+    if (organization) return organization.id;
+    return null;
   }
 
   emitChange() {
@@ -82,21 +79,22 @@ class OrganizationStore extends EventEmitter {
   }
 
   dispatcherCallback(action) {
-    switch(action.type) {
+    switch (action.type) {
+      default: break;
       case OrganizationActions.CREATE_ORGANIZATION:
         _addOrganization(action.organization);
         this.emitChange();
         break;
       case OrganizationActions.UPDATE_ORGANIZATION:
-        _updateOrganization(action.id, action.updates)
+        _updateOrganization(action.id, action.updates);
         this.emitChange();
         break;
       case OrganizationActions.ADD_MEMBER:
-        _updateOrganization(action.id, action.updates)
+        _updateOrganization(action.id, action.updates);
         this.emitChange();
         break;
       case OrganizationActions.REMOVE_MEMBER:
-        _updateOrganization(action.id, action.updates)
+        _updateOrganization(action.id, action.updates);
         this.emitChange();
         break;
       case OrganizationActions.DELETE_ORGANIZATION:
@@ -115,11 +113,42 @@ class OrganizationStore extends EventEmitter {
   }
 
   fetchOrganization(id) {
-    // TODO API call
+    return request.get(`/organizations/${id}`);
+  }
+
+  removeOrganization(id) {
+    return request.delete(`/organizations/${id}`);
+  }
+
+  createOrganization(id, name) {
+    return request.post(`/organizations/`)
+      .send({ name });
   }
 
   fetchGroups(id) {
-    // TODO API call
+    return request.get(`/organizations/${id}/groups`);
+  }
+
+  addGroup(id, userId) {
+    return request.post(`/organizations/${id}/groups/`)
+      .send({ userId });
+  }
+
+  removeGroup(id, userId) {
+    return request.delete(`/organizations/${id}/groups/${groupId}`);
+  }
+
+  fetchMembers(id) {
+    return request.get(`/organizations/${id}/members/`);
+  }
+
+  addMember(id, userId) {
+    return request.post(`/organizations/${id}/members/`)
+      .send({ userId });
+  }
+
+  removeMember(id, userId) {
+    return request.delete(`/organizations/${id}/members/${userId}`);
   }
 }
 

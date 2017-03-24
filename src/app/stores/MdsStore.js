@@ -80,12 +80,30 @@ class MdsStore extends EventEmitter {
     }
   }
 
-  fetchMds() {
-    // TODO API call
+  fetchMds(organizationId) {
+    return request.get(`/organizations/${organizationId}/mds_links/`);
   }
 
-  fetchSyncedProtocols(id) {
-    // TODO API call
+  createMds(organizationId, name, url) {
+    return request.post(`/organizations/${organizationId}/mds_links/`)
+      .send({ name, url });
+  }
+
+  removeMds(organizationId, mdsId) {
+    return request.delete(`/organizations/${organizationId}/mds_links/${mdsId}`);
+  }
+
+  fetchSyncedProtocols(organizationId, id) {
+    return request.get(`/organizations/${organizationId}/mds_links/${id}/protocols/`);
+  }
+
+  createSyncedProtocol(organizationId, mdsId, protocolId) {
+    return request.post(`/organizations/${organizationId}/mds_links/${id}/protocols/`)
+      .send({ protocolId });
+  }
+
+  removeSyncedProtocol(organizationId, mdsId, protocolId) {
+    return request.delete(`/organizations/${organizationId}/mds_links/${id}/protocols/${protocolId}`)
   }
 }
 

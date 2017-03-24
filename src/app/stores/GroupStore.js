@@ -83,8 +83,30 @@ class GroupStore extends EventEmitter {
     }
   }
 
-  fetchGroup(id) {
-    // TODO API call
+  fetchGroup(organizationId, id) {
+    return request.get(`/organizations/${organizationId}/groups/${id}`);
+  }
+
+  removeGroup(organizationId, id) {
+    return request.delete(`/organizations/${organizationId}/groups/${id}`);
+  }
+
+  createGroup(organizationId, name) {
+    return request.post(`/organizations/${organizationId}/groups/`)
+      .send({ name });
+  }
+
+  fetchGroupMembers(organizationId, id) {
+    return request.get(`/organizations/${organizationId}/groups/${id}`);
+  }
+
+  addGroupMember(organizationId, groupId, memberId) {
+    return request.post(`/organizations/${organizationId}/groups/${groupId}/members/`)
+      .send({ memberId });
+  }
+
+  removeGroupMember(organizationId, groupId, memberId) {
+    return request.delete(`/organizations/${organizationId}/groups/${groupId}/members/${memberId}`);
   }
 }
 
