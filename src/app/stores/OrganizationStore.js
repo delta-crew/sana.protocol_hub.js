@@ -1,5 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import OrganizationActions from '../actions/OrganizationActions';
+import OrganizationActionCreator from '../actionsCreators/OrganizationActionCreator';
 import StoreActions from '../actions/StoreActions';
 import request from 'superagent-bluebird-promise';
 import { EventEmitter } from 'events';
@@ -26,6 +27,25 @@ function _updateOrganization(id, updates) {
     return organization.id === id;
   });
   if(i > -1) Object.assign(_organizations[i], updates);
+}
+
+function _updateFieldOnOrganization(id, field, data) {
+  let organization = _organizations.find(({ id: _id }) => id == _id);
+  organization[field] = data;
+}
+
+function _addFieldOnOrganization(id, field, data) {
+  let organization = _organizations.find(({ id: _id }) => id == _id);
+  organization[field].push(data);
+}
+
+function _removeFieldOnOrganization(id, field, data) {
+  let organization = _organizations.find(({ id: _id }) => id == _id);
+  organization[field] = organization[field].reduce((memo, item) => {
+    if (id !== item.id) {
+      memo.push(item);
+    }
+  });
 }
 
 function _removeOrganization(id) {
@@ -89,14 +109,6 @@ class OrganizationStore extends EventEmitter {
         _updateOrganization(action.id, action.updates);
         this.emitChange();
         break;
-      case OrganizationActions.ADD_MEMBER:
-        _updateOrganization(action.id, action.updates);
-        this.emitChange();
-        break;
-      case OrganizationActions.REMOVE_MEMBER:
-        _updateOrganization(action.id, action.updates);
-        this.emitChange();
-        break;
       case OrganizationActions.DELETE_ORGANIZATION:
         _deleteOrganization(action.id);
         this.emitChange();
@@ -105,6 +117,33 @@ class OrganizationStore extends EventEmitter {
         _fetchOrganization(action.page);
         this.emitChange();
         break;
+
+      case OrganizationActions.FETCH_GROUPS:
+        _updateFieldOnOrganization(action.id, 'groups', action.groups);
+        this.emitChange();
+        break;
+      case OrganizationActions.ADD_GROUP:
+        _addFieldOnOrganization(action.id, 'groups', action.group);
+        this.emitChange();
+        break;
+      case OrganizationActions.REMOVE_GROUP:
+        _removeFieldOnOrganization(action.id, 'groups', action.id);
+        this.emitChange();
+        break;
+
+      case OrganizationActions.FETCH_MEMBERS:
+        _updateFieldOnOrganization(action.id, 'members', action.members);
+        this.emitChange();
+        break;
+      case OrganizationActions.ADD_MEMBER:
+        _addFieldOnOrganization(action.id, 'members', action.member);
+        this.emitChange();
+        break;
+      case OrganizationActions.REMOVE_MEMBER:
+        _removeFieldOnOrganization(action.id, 'members', action.id);
+        this.emitChange();
+        break;
+
       case OrganizationActions.SWITCH_ACTIVE_ORG:
         _switchActiveOrg(action.id);
         this.emitChange();
@@ -113,42 +152,51 @@ class OrganizationStore extends EventEmitter {
   }
 
   fetchOrganization(id) {
-    return request.get(`/organizations/${id}`);
+    return request.get(`/organizations/${id}`)
+      .then(({ data }) => OrganizationActionCreator.fetchOrganization(data));
   }
 
   removeOrganization(id) {
-    return request.delete(`/organizations/${id}`);
+    return request.delete(`/organizations/${id}`)
+      .then(() => OrganizationActionCreator.removeOrganization(id));
   }
 
-  createOrganization(id, name) {
+  createOrganization(name) {
     return request.post(`/organizations/`)
-      .send({ name });
+      .send({ name })
+      .then(({ data }) => OrganizationActionCreator.createOrganization(data));
   }
 
   fetchGroups(id) {
-    return request.get(`/organizations/${id}/groups`);
+    return request.get(`/organizations/${id}/groups`)
+      .then(({ data }) => OrganizationActionCreator.fetchGroups(id, groups));
   }
 
-  addGroup(id, userId) {
+  addGroup(id, name) {
     return request.post(`/organizations/${id}/groups/`)
-      .send({ userId });
+      .send({ name })
+      .then(({ data }) => OrganizationActionCreator.addGroup(id, data));
   }
 
-  removeGroup(id, userId) {
-    return request.delete(`/organizations/${id}/groups/${groupId}`);
+  removeGroup(id, groupId) {
+    return request.delete(`/organizations/${id}/groups/${groupId}`)
+      .then(({ data }) => OrganizationActionCreator.removeGroup(id, groupId));
   }
 
   fetchMembers(id) {
-    return request.get(`/organizations/${id}/members/`);
+    return request.get(`/organizations/${id}/members/`)
+      .then(({ data }) => OrganizationActionCreator.fetchMembers(id, daata));
   }
 
   addMember(id, userId) {
     return request.post(`/organizations/${id}/members/`)
-      .send({ userId });
+      .send({ userId })
+      .then(({ data }) => OrganizationActionCreator.addMember(id, data));
   }
 
   removeMember(id, userId) {
-    return request.delete(`/organizations/${id}/members/${userId}`);
+    return request.delete(`/organizations/${id}/members/${userId}`)
+      .then(({ data }) => OrganizationActionCreator.removeMember(id, userId));
   }
 }
 
