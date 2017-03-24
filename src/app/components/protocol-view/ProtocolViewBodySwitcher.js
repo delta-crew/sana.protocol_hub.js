@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 import ProtocolViewXML from './ProtocolViewXML';
 import ProtocolViewHistory from './ProtocolViewHistory';

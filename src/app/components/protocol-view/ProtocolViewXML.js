@@ -1,4 +1,5 @@
 import React from 'react';
+import * as moment from 'moment';
 
 class ProtocolViewXML extends React.Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class ProtocolViewXML extends React.Component {
       revisionSwitcher =
         <a href='#' onClick={this.viewCurrent} >View current</a>
     }
+    let ts = this.props.revision.revision_date;
 
     return (
       <div className='protocol-view-xml-container'>
@@ -26,7 +28,7 @@ class ProtocolViewXML extends React.Component {
 
             <div className='protocol-view-xml-revision-container'>
               <span className='protocol-view-xml-current-revision'>
-                Viewing {this.props.revision.revision_date}
+                Viewing {moment.unix(ts).format('YYYY/MM/DD')}
               </span>
 
               <span className='protocol-view-xml-revision-switcher'>

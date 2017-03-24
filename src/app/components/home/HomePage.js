@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 import ProtocolStore from '../../stores/ProtocolStore';
 import OrganizationStore from '../../stores/OrganizationStore';
@@ -44,15 +45,15 @@ class HomePage extends React.Component {
           </div>
 
           <div className='col-xs-2'>
-            <a href='/mds' className='sync-btn' className='btn btn-default btn-block'>
+            <Link to='/mds' className='sync-btn' className='btn btn-default btn-block'>
               <span className='glyphicon glyphicon-cloud' aria-hidden='true'></span> Sync
-            </a>
+            </Link>
           </div>
 
           <div className='col-xs-2'>
-            <a href='/import' id='import-btn' className='btn btn-success btn-block'>
+            <Link to='/import' id='import-btn' className='btn btn-success btn-block'>
               <span className='glyphicon glyphicon-floppy-disk' aria-hidden='true'></span> Import
-            </a>
+            </Link>
           </div>
         </div>
 

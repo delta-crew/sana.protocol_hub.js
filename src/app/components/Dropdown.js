@@ -15,7 +15,6 @@ class Dropdown extends React.Component {
   }
 
   select(item) {
-    console.log(item)
     this.setState({
       selected: item,
     });

@@ -1,4 +1,5 @@
 import React from 'react';
+import * as moment from 'moment';
 
 import { XML_VIEW } from './ProtocolViewBodySwitcher';
 
@@ -15,11 +16,13 @@ class ProtocolViewHistoryListItem extends React.Component {
   }
 
   render() {
+    let ts = this.props.revision.revision_date;
+
     return (
       <div className='protocol-view-history-list-item row'>
         <div className='col-xs-9'>
           <div className='protocol-view-history-list-item-revision'>
-            {this.props.revision.revision_date}
+            {moment.unix(ts).format('YYYY/MM/DD')}
           </div>
         </div>
 
