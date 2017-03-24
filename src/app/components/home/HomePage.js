@@ -33,12 +33,6 @@ class HomePage extends React.Component {
   render() {
     return (
       <div className='home-page'>
-        <div className='row'>
-          <div className='col-lg-12'>
-            <OrganizationSwitcher />
-          </div>
-        </div>
-
         <div className='row vertical-align'>
           <div className='col-xs-8'>
             <h2>Protocols</h2>

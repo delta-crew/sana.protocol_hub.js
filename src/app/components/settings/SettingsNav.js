@@ -8,12 +8,6 @@ class SettingsNav extends React.Component {
     return (
       <div className='list-group settings-navbar'>
         <ul className='nav nav-pills nav-stacked'>
-          <h4 className='heading'>Personal Settings</h4>
-          <li role='presentation' className={active === 'profile' ? 'active' : ''}>
-            <Link to='#' className='settings-nav-item'>
-              Profile
-            </Link>
-          </li>
           <h4 className='heading'>Organization Settings</h4>
           <li role='presentation' className={active === 'members' ? 'active' : ''}>
             <Link to='/settings/members' className='settings-nav-item'>

@@ -24,7 +24,7 @@ class MemberList extends React.Component {
         <form>
           <input type='text' value={this.state.filter} onChange={this.handleFilter} />
         </form>
-        {map(this.props.users, (user) => <MemberListItem member={user} />)}
+        {map(this.props.users, (user, i) => <MemberListItem key={i} member={user} />)}
       </div>
     );
   }
