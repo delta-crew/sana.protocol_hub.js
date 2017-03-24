@@ -1,6 +1,7 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import UserActions from '../actions/ProtocolActions';
 import StoreActions from '../actions/StoreActions';
+import docCookies from 'mozilla-doc-cookies';
 import request from 'superagent-bluebird-promise';
 import { EventEmitter } from 'events';
 
@@ -16,7 +17,15 @@ class UserStore extends EventEmitter {
   constructor() {
     super();
     this.dispatchToken = AppDispatcher.register(this.dispatcherCallback.bind(this));
-    // fetch here?
+
+    let cookie = JSON.parse(docCookies.getItem('sana_AUTH_TOKEN_KEY'));
+
+    if(cookie) {
+      let user_data = cookie.USER_KEY;
+      user_data.auth_token = cookie.AUTH_TOKEN_KEY;
+
+      _setUser(user_data);
+    }
   }
 
   getUser() {
@@ -50,10 +59,6 @@ class UserStore extends EventEmitter {
         this.emitChange();
         break;
     }
-  }
-
-  fetchUser() {
-    // TODO API call
   }
 }
 

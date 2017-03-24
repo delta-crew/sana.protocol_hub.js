@@ -1,6 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import OrganizationActions from '../actions/OrganizationActions';
-import OrganizationActionCreator from '../actionsCreators/OrganizationActionCreator';
+import OrganizationActionCreator from '../actionCreators/OrganizationActionCreator';
 import StoreActions from '../actions/StoreActions';
 import request from 'superagent-bluebird-promise';
 import { EventEmitter } from 'events';
@@ -66,17 +66,17 @@ class OrganizationStore extends EventEmitter {
     this.dispatchToken = AppDispatcher.register(this.dispatcherCallback.bind(this));
   }
 
-  static getAll() {
+  getAll() {
     return _organizations;
   }
 
-  static get(id) {
+  get(id) {
     const i = _organizations.findIndex(organization => organization.id === id);
     if (i > -1) return _organizations[i];
     return null;
   }
 
-  static getActiveOrg() {
+  getActiveOrg() {
     return _activeOrganization;
   }
 
