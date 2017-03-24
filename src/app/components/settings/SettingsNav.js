@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 class SettingsNav extends React.Component {
   render() {
@@ -9,20 +10,20 @@ class SettingsNav extends React.Component {
         <ul className='nav nav-pills nav-stacked'>
           <h4 className='heading'>Personal Settings</h4>
           <li role='presentation' className={active === 'profile' ? 'active' : ''}>
-            <a href='#' className='settings-nav-item'>
+            <Link to='#' className='settings-nav-item'>
               Profile
-            </a>
+            </Link>
           </li>
           <h4 className='heading'>Organization Settings</h4>
           <li role='presentation' className={active === 'members' ? 'active' : ''}>
-            <a href='/settings/members' className='settings-nav-item'>
+            <Link to='/settings/members' className='settings-nav-item'>
               Members
-            </a>
+            </Link>
           </li>
           <li role='presentation' className={active === 'groups' ? 'active' : ''}>
-            <a href='/settings/groups' className='settings-nav-item'>
+            <Link to='/settings/groups' className='settings-nav-item'>
               Groups
-            </a>
+            </Link>
           </li>
         </ul>
       </div>

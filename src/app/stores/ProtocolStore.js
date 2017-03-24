@@ -12,7 +12,7 @@ let _protocols = [
     owner: 'delta',
     name: 'test protocol 1',
     private: true,
-    revision_date: 10,
+    revision_date: 1490327694,
   }, {
     id: 1,
     revision: 2,
@@ -20,7 +20,7 @@ let _protocols = [
     owner: 'delta',
     name: 'test protocol 1',
     private: true,
-    revision_date: 9,
+    revision_date: 1400300000,
   },
 ];
 
