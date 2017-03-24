@@ -80,8 +80,17 @@ class MdsStore extends EventEmitter {
     }
   }
 
-  fetchMds(organizationId) {
+  listMds(organizationId) {
     return request.get(`/organizations/${organizationId}/mds_links/`);
+  }
+
+  fetchMds(organizationId, mdsId) {
+    return request.get(`/organizations/${organizationId}/mds_links/${mdsId}`);
+  }
+
+  updateMds(organizationId, mdsId, name, url) {
+    return request.put(`/organizations/${organizationId}/mds_links/${mdsId}`)
+      .send({ name, url });
   }
 
   createMds(organizationId, name, url) {
