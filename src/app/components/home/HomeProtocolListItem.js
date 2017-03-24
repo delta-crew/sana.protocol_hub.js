@@ -7,7 +7,7 @@ class HomeProtocolListItem extends React.Component {
       <div className='protocol-list-item'>
         <span className='protocol-list-item-left'>
           <Link to={'/protocol/' + this.props.protocolId} className='protocol-list-item-name'>{this.props.name}</Link>
-          <Link to='#' className='home-protocol-edit'>Edit</Link>
+          <a href='#' className='home-protocol-edit'>Edit</a>
         </span>
       </div>
     );
