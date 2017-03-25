@@ -144,7 +144,7 @@ class MdsStore extends EventEmitter {
   }
 
   fetchSyncedProtocols(organizationId, id) {
-    return request.get(`/organizations/${organizationId}/mds_links/${id}/protocols/`);
+    return request.get(`/organizations/${organizationId}/mds_links/${id}/protocols/`)
       .then(({ data }) => MdsActionCreator.fetchSyncedProtocols(id, data));
   }
 

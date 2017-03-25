@@ -30,4 +30,4 @@ class MemberList extends React.Component {
   }
 }
 
-module.exports = MemberList;
+export default MemberList;

@@ -30,7 +30,7 @@ class GroupList extends React.Component {
         <form>
           <input type='text' value={this.state.filter} onChange={this.handleFilter} />
         </form>
-        {map(groups, (group) => <GroupListItem group={group} />)}
+        {map(groups, (group, i) => <GroupListItem key={i} group={group} />)}
       </div>
     );
   }

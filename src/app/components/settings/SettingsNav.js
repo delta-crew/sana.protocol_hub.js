@@ -1,13 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router';
 
+import OrganizationSwitcher from '../OrganizationSwitcher';
+
 class SettingsNav extends React.Component {
   render() {
     let active = this.props.active;
 
     return (
       <div className='list-group settings-navbar'>
-        <ul className='nav nav-pills nav-stacked'>
+        <OrganizationSwitcher />
+
+        <ul className='nav nav-pills nav-stacked settings-nav'>
           <h4 className='heading'>Organization Settings</h4>
           <li role='presentation' className={active === 'members' ? 'active' : ''}>
             <Link to='/settings/members' className='settings-nav-item'>
@@ -25,4 +29,4 @@ class SettingsNav extends React.Component {
   }
 }
 
-module.exports = SettingsNav;
+export default SettingsNav;
