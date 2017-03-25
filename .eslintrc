@@ -1,0 +1,29 @@
+{
+  "extends": "eslint-config-airbnb",
+  "env": {
+    "node": true,
+    "browser": true,
+    "mocha": true,
+  },
+
+  "globals": {
+    "__PRODUCTION__": true,
+    "__DEV__": true,
+    "__CLIENT__": true,
+    "__SERVER__": true
+  },
+
+  "plugins": [
+    "promise"
+  ],
+
+  "parser": "babel-eslint",
+
+  "rules": {
+      "promise/param-names": 2,
+      "promise/always-return": 2,
+      "promise/always-catch": 2,
+
+      "react/prefer-stateless-function": 1,
+  }
+}
