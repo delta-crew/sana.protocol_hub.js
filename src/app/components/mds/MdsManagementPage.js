@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 import MdsStore from '../../stores/MdsStore';
 import MdsList from './MdsList';
@@ -14,10 +15,16 @@ class MdsManagementPage extends React.Component {
   render() {
     return (
       <div className='mds-page'>
-        <div className='row vertical-align'>
+        <div className='row mds-header'>
           <div className='col-xs-8'>
             <h2>Your MDS's</h2>
           </div>
+        </div>
+
+        <div className='col-xs-2 mds-add-btn'>
+          <Link to='/new' className='btn btn-success btn-block'>
+            <span className='glyphicon glyphicon-plus' aria-hidden='true'></span> Add
+          </Link>
         </div>
 
         <div className='row'>

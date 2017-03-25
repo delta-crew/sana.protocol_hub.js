@@ -6,6 +6,7 @@ import App from '../../app/components/App';
 import HomePage from '../../app/components/home/HomePage';
 import SyncPage from '../../app/components/sync/SyncPage';
 import ImportPage from '../../app/components/import/ImportPage';
+import AddMdsPage from '../../app/components/mds/AddMdsPage';
 import SearchResultsPage from '../../app/components/search/SearchResultsPage';
 import ProtocolViewPage from '../../app/components/protocol-view/ProtocolViewPage';
 import MdsManagementPage from '../../app/components/mds/MdsManagementPage';
@@ -21,6 +22,7 @@ ReactDOM.render((
           <Route path='/search' component={SearchResultsPage} />
           <Route path='/sync' component={SyncPage} />
           <Route path='/import' component={ImportPage} />
+          <Route path='/new' component={AddMdsPage} />
           <Route path='/protocol/:protocolId' component={ProtocolViewPage} />
           <Route path='/mds' component={MdsManagementPage} />
           <Route path='/mds/:mdsId' component={SyncPage} />
