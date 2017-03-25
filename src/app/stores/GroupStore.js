@@ -1,11 +1,17 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import GroupActions from '../actions/GroupActions';
+import OrganizationActions from '../actions/OrganizationActions';
+import GroupActionCreator from '../actionCreators/GroupActionCreator';
 import StoreActions from '../actions/StoreActions';
 import request from 'superagent-bluebird-promise';
 import { EventEmitter } from 'events';
 
 let _groups = [{
 },];
+
+function _clearGroups() {
+  _groups = [];
+}
 
 function _addGroup(group) {
   _groups.push(group);
@@ -23,6 +29,17 @@ function _removeGroup(id) {
     return group.id === id;
   });
   _groups.splice(i, 1);
+}
+
+function _addMember(groupId, member) {
+  const group = groups.find(({ id }) => groupId === id);
+  group.members.push(member);
+}
+
+function _removeMember(groupId, memberId) {
+  const group = groups.find(({ id }) => groupId === id);
+  const i = group.members.findIndex(({ id }) => memberId === id);
+  group.members.splice(i, 1);
 }
 
 class GroupStore extends EventEmitter {
@@ -55,21 +72,31 @@ class GroupStore extends EventEmitter {
   }
 
   dispatcherCallback(action) {
-    switch(action.type) {
+    switch (action.type) {
+      case OrganizationActions.SWITCH_ACTIVE_ORG:
+        _clearGroups();
+        this.emitChange();
+        break;
       case GroupActions.CREATE_GROUP:
         _addGroup(action.group);
         this.emitChange();
         break;
       case GroupActions.UPDATE_GROUP:
-        _updateGroup(action.id, action.updates)
+        _updateGroup(action.id, action.updates);
         this.emitChange();
         break;
       case GroupActions.ADD_MEMBER:
-        _updateGroup(action.id, action.updates)
+        _updateGroup(action.id, {
+          members: [...this.get(action.id).members, action.member],
+        });
+        this.emitChange();
+        break;
+      case GroupActions.FETCH_MEMBERS:
+        _updateGroup(action.id, { members: action.members });
         this.emitChange();
         break;
       case GroupActions.REMOVE_MEMBER:
-        _updateGroup(action.id, action.updates)
+        _removeMember(action.groupId, action.memberId);
         this.emitChange();
         break;
       case GroupActions.DELETE_GROUP:
@@ -84,29 +111,41 @@ class GroupStore extends EventEmitter {
   }
 
   fetchGroup(organizationId, id) {
-    return request.get(`/organizations/${organizationId}/groups/${id}`);
+    return request.get(`/organizations/${organizationId}/groups/${id}`)
+      .then(({ data }) => GroupActionCreator.fetchGroup(data));
+  }
+
+  updateGroup(organizationId, id, data) {
+    return request.put(`/organizations/${organizationId}/groups/${id}`)
+      .send(data)
+      .then(({ data }) => GroupActionCreator.updateGroup(id, data));
   }
 
   removeGroup(organizationId, id) {
-    return request.delete(`/organizations/${organizationId}/groups/${id}`);
+    return request.delete(`/organizations/${organizationId}/groups/${id}`)
+      .then(() => GroupActionCreator.removeGroup(id));
   }
 
   createGroup(organizationId, name) {
     return request.post(`/organizations/${organizationId}/groups/`)
-      .send({ name });
+      .send({ name })
+      .then(({ data }) => GroupActionCreator.createGroup(data));
   }
 
   fetchGroupMembers(organizationId, id) {
-    return request.get(`/organizations/${organizationId}/groups/${id}`);
+    return request.get(`/organizations/${organizationId}/groups/${id}`)
+      .then(({ data }) => GroupActionCreator.fetchGroupMembers(id, data));
   }
 
   addGroupMember(organizationId, groupId, memberId) {
     return request.post(`/organizations/${organizationId}/groups/${groupId}/members/`)
-      .send({ memberId });
+      .send({ memberId })
+      .then(({ data }) => GroupActionCreator.addGroupMember(id, data));
   }
 
   removeGroupMember(organizationId, groupId, memberId) {
-    return request.delete(`/organizations/${organizationId}/groups/${groupId}/members/${memberId}`);
+    return request.delete(`/organizations/${organizationId}/groups/${groupId}/members/${memberId}`)
+      .then(({ data }) => GroupActionCreator.removeGroupMember(groupId, memberId));
   }
 }
 
