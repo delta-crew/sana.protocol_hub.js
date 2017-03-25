@@ -1,5 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import MdsActions from '../actions/MdsActions';
+import OrganizationActions from '../actions/MdsActions';
 import StoreActions from '../actions/StoreActions';
 import request from 'superagent-bluebird-promise';
 import { EventEmitter } from 'events';
@@ -11,6 +12,10 @@ let _mds = [{
   link: 'http://mds1.com/api',
   synced_protocols: [],
 }];
+
+function _clearMds() {
+  _mds = [];
+}
 
 function _addMds(mds) {
   _mds.push(mds);
@@ -28,6 +33,17 @@ function _removeMds(id) {
     return mds.id === id;
   });
   _mds.splice(i, 1);
+}
+
+function _addSyncedProtocol(mdsId, protocol) {
+  const mds = mdss.find(({ id }) => mdsId === id);
+  mds.protocols.push(protocol);
+}
+
+function _removeSyncedProtocol(mdsId, protocolId) {
+  const mds = mdss.find(({ id }) => mdsId === id);
+  const i = mds.protocols.findIndex(({ id }) => protocolId === id);
+  mds.protocols.splice(i, 1);
 }
 
 class MdsStore extends EventEmitter {
@@ -61,6 +77,11 @@ class MdsStore extends EventEmitter {
 
   dispatcherCallback(action) {
     switch(action.type) {
+      case OrganizationActions.SWITCH_ACTIVE_ORG:
+        _clearMds();
+        this.emitChange();
+        break;
+
       case MdsActions.CREATE_MDS:
         _addMds(action.mds);
         this.emitChange();
@@ -77,42 +98,65 @@ class MdsStore extends EventEmitter {
         _fetchMds(action.page);
         this.emitChange();
         break;
+
+      case MdsActions.FETCH_MEMBERS:
+        _updateMds(action.id, { protocols: action.protocols });
+        this.emitChange();
+        break;
+      case MdsActions.ADD_MEMBER:
+        _updateMds(action.id, {
+          protocols: [...this.get(action.id).protocols, action.protocol],
+        });
+        this.emitChange();
+        break;
+      case MdsActions.REMOVE_MEMBER:
+        _removeSyncedProtocol(action.mdsId, action.protocolId);
+        this.emitChange();
+        break;
     }
   }
 
   listMds(organizationId) {
-    return request.get(`/organizations/${organizationId}/mds_links/`);
+    return request.get(`/organizations/${organizationId}/mds_links/`)
+      .then(({ data }) => MdsActionCreator.listMds(data));
   }
 
   fetchMds(organizationId, mdsId) {
-    return request.get(`/organizations/${organizationId}/mds_links/${mdsId}`);
+    return request.get(`/organizations/${organizationId}/mds_links/${mdsId}`)
+      .then(({ data }) => MdsActionCreator.fetchMds(data));
   }
 
   updateMds(organizationId, mdsId, name, url) {
     return request.put(`/organizations/${organizationId}/mds_links/${mdsId}`)
-      .send({ name, url });
+      .send({ name, url })
+      .then(({ data }) => MdsActionCreator.updateMds(mdsId, data));
   }
 
   createMds(organizationId, name, url) {
     return request.post(`/organizations/${organizationId}/mds_links/`)
-      .send({ name, url });
+      .send({ name, url })
+      .then(({ data }) => MdsActionCreator.createMds(data));
   }
 
   removeMds(organizationId, mdsId) {
-    return request.delete(`/organizations/${organizationId}/mds_links/${mdsId}`);
+    return request.delete(`/organizations/${organizationId}/mds_links/${mdsId}`)
+      .then(() => MdsActionCreator.removeMds(mdsId));
   }
 
   fetchSyncedProtocols(organizationId, id) {
     return request.get(`/organizations/${organizationId}/mds_links/${id}/protocols/`);
+      .then(({ data }) => MdsActionCreator.fetchSyncedProtocols(id, data));
   }
 
   createSyncedProtocol(organizationId, mdsId, protocolId) {
     return request.post(`/organizations/${organizationId}/mds_links/${id}/protocols/`)
-      .send({ protocolId });
+      .send({ protocolId })
+      .then(({ data }) => MdsActionCreator.createSyncedProtocol(id, data));
   }
 
   removeSyncedProtocol(organizationId, mdsId, protocolId) {
     return request.delete(`/organizations/${organizationId}/mds_links/${id}/protocols/${protocolId}`)
+      .then(({ data }) => MdsActionCreator.removeSyncedProtocol(id, protocolId));
   }
 }
 
