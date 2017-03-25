@@ -1,5 +1,5 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import UserActions from '../actions/ProtocolActions';
+import UserActions from '../actions/UserActions';
 import StoreActions from '../actions/StoreActions';
 import docCookies from 'mozilla-doc-cookies';
 import request from 'superagent-bluebird-promise';
@@ -9,8 +9,14 @@ let _user = {
   name: 'Test User',
 };
 
+let _users = [];
+
 function _setUser(user) {
   _user = user;
+}
+
+function _setUsers(users) {
+  _users = users;
 }
 
 class UserStore extends EventEmitter {
@@ -30,6 +36,10 @@ class UserStore extends EventEmitter {
 
   getUser() {
     return _user;
+  }
+
+  getUsers() {
+    return _users;
   }
 
   loggedIn() {
@@ -58,7 +68,20 @@ class UserStore extends EventEmitter {
         _setUser({});
         this.emitChange();
         break;
+
+      case UserActions.FETCH_USERS:
     }
+  }
+
+  fetchMe() {
+    return request.get('/users/me')
+      .then(({ data }) => UserActionCreator.fetchMe(data));
+  }
+
+  fetchUsers(query) {
+    return request.get('/users/')
+      .query({ query })
+      .then(({ data }) => UserActionCreator.fetchUsers(data));
   }
 }
 

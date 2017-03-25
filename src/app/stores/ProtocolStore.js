@@ -143,8 +143,9 @@ class ProtocolStore extends EventEmitter {
       .then(({ data }) => ProtocolActionCreator.fetchProtocols(data));
   }
 
-  fetchPublicProtocols() {
+  fetchPublicProtocols(query) {
     return request.get(`/protocols/public/`)
+      .query({ query })
       .then(({ data }) => ProtocolActionCreator.fetchPublicProtocols(data));
   }
 
