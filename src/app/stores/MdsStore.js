@@ -1,6 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import MdsActions from '../actions/MdsActions';
-import OrganizationActions from '../actions/MdsActions';
+import OrganizationActions from '../actions/OrganizationActions';
 import StoreActions from '../actions/StoreActions';
 import api from './api';
 import { EventEmitter } from 'events';
@@ -144,7 +144,7 @@ class MdsStore extends EventEmitter {
   }
 
   fetchSyncedProtocols(organizationId, id) {
-    return api.get(`/organizations/${organizationId}/mds_links/${id}/protocols/`);
+    return api.get(`/organizations/${organizationId}/mds_links/${id}/protocols/`)
       .then(({ data }) => MdsActionCreator.fetchSyncedProtocols(id, data));
   }
 

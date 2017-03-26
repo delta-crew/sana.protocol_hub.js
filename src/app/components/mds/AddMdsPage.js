@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 
 import OrganizationSwitcher from '../OrganizationSwitcher';
 import OrganizationStore from '../../stores/OrganizationStore';
@@ -14,6 +13,7 @@ class AddMdsPage extends React.Component {
       mds_link: '',
     };
 
+    this.handleSave = this.handleSave.bind(this);
     this.handleMdsName = this.handleMdsName.bind(this);
     this.handleMdsLink = this.handleMdsLink.bind(this);
   }
@@ -55,7 +55,7 @@ class AddMdsPage extends React.Component {
         </form>
 
         <div className='save-mds-button' onClick={this.handleSave}>
-          <a href='' className='btn btn-success'>
+          <a href='#' className='btn btn-success'>
             <span className='glyphicon glyphicon-floppy-disk' aria-hidden='true'></span> Save MDS
           </a>
         </div>
@@ -64,4 +64,4 @@ class AddMdsPage extends React.Component {
   }
 }
 
-module.exports = AddMdsPage;
+export default AddMdsPage;

@@ -22,7 +22,7 @@ class MdsManagementPage extends React.Component {
         </div>
 
         <div className='col-xs-2 mds-add-btn'>
-          <Link to='/new' className='btn btn-success btn-block'>
+          <Link to='/new/mds' className='btn btn-success btn-block'>
             <span className='glyphicon glyphicon-plus' aria-hidden='true'></span> Add
           </Link>
         </div>

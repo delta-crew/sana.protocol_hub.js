@@ -1,4 +1,5 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
 
 import OrganizationStore from '../stores/OrganizationStore';
 import OrganizationActionCreator from '../actionCreators/OrganizationActionCreator';
@@ -33,7 +34,11 @@ class OrganizationSwitcher extends React.Component {
   }
 
   _onSelect(organization) {
-    OrganizationActionCreator.switchActiveOrg(organization.id);
+    if(organization.link) {
+      browserHistory.push('/new/organization');
+    } else {
+      OrganizationActionCreator.switchActiveOrg(organization.id);
+    }
   }
 
   render() {
@@ -41,7 +46,13 @@ class OrganizationSwitcher extends React.Component {
       return {
         name: organization.name,
         id: organization.id,
+        link: false,
       };
+    });
+
+    organizations.push({
+      name: 'Create Organization',
+      link: true,
     });
 
     let active = OrganizationStore.getActiveOrg();
