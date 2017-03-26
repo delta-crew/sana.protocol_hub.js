@@ -25,7 +25,8 @@ class ProtocolViewPage extends React.Component {
 
   componentWillMount() {
     ProtocolStore.addChangeListener(this._onLoad);
-    ProtocolStore.fetchProtocolVersions(this.props.params.protocolId);
+    let id = Number(this.props.params.protocolId);
+    ProtocolStore.fetchProtocolVersions(id);
   }
 
   componentWillUnmount() {
@@ -39,10 +40,10 @@ class ProtocolViewPage extends React.Component {
     }
 
     let scope = null;
-    if (versions[0].private) {
-      scope = <span className="protocol-view-scope label label-warning">Private</span>
-    } else {
+    if (versions[0].public) {
       scope = <span className="protocol-view-scope label label-info">Public</span>
+    } else {
+      scope = <span className="protocol-view-scope label label-warning">Private</span>
     }
 
     return (
