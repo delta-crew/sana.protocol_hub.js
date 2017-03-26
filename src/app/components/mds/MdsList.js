@@ -10,7 +10,7 @@ class MdsList extends React.Component {
       <div className='mds-list'>
         <div>
           {mds.map((mds) =>
-            <MdsListItem key={mds.id} name={mds.name} link={mds.link} id={mds.id} />
+            <MdsListItem key={mds.id} name={mds.name} url={mds.url} id={mds.id} />
           )}
         </div>
       </div>
@@ -18,4 +18,4 @@ class MdsList extends React.Component {
   }
 }
 
-module.exports = MdsList;
+export default MdsList;

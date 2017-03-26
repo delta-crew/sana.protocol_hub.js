@@ -2,16 +2,11 @@ import AppDispatcher from '../dispatcher/AppDispatcher';
 import MdsActions from '../actions/MdsActions';
 import OrganizationActions from '../actions/OrganizationActions';
 import StoreActions from '../actions/StoreActions';
+import MdsActionCreator from '../actionCreators/MdsActionCreator';
 import api from './api';
 import { EventEmitter } from 'events';
 
-let _mds = [{
-  id: 1,
-  owner: '',
-  name: 'mds 1',
-  link: 'http://mds1.com/api',
-  synced_protocols: [],
-}];
+let _mds = [];
 
 function _clearMds() {
   _mds = [];
@@ -19,6 +14,10 @@ function _clearMds() {
 
 function _addMds(mds) {
   _mds.push(mds);
+}
+
+function _fetchMds(mds) {
+  mds ? _mds = mds : mds = [];
 }
 
 function _updateMds(id, updates) {
@@ -95,7 +94,7 @@ class MdsStore extends EventEmitter {
         this.emitChange();
         break;
       case MdsActions.FETCH_MDS:
-        _fetchMds(action.page);
+        _fetchMds(action.mds);
         this.emitChange();
         break;
 
