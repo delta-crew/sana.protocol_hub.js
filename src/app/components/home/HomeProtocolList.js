@@ -10,7 +10,7 @@ class HomeProtocolList extends React.Component {
       <div id='home-protocol-list'>
         <div>
           {protocols.map((protocol) =>
-            <HomeProtocolListItem key={protocol.id} name={protocol.name} protocolId={protocol.id} />
+            <HomeProtocolListItem key={protocol.id} title={protocol.title} protocolId={protocol.id} />
           )}
         </div>
       </div>
@@ -18,4 +18,4 @@ class HomeProtocolList extends React.Component {
   }
 }
 
-module.exports = HomeProtocolList;
+export default HomeProtocolList;
