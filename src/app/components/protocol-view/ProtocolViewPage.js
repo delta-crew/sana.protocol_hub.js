@@ -8,21 +8,24 @@ class ProtocolViewPage extends React.Component {
     super(props);
 
     this.state = {
-      revisions: ProtocolStore.getAllRevisions(1),
+      versions: [],
     }
+
+    this._onLoad = this._onLoad.bind(this);
   }
 
   _onLoad() {
-    let revisions = ProtocolStore.getAllRevisions(this.props.params.protocolId);
+    let id = Number(this.props.params.protocolId);
+    let versions = ProtocolStore.getAllVersions(id);
 
     this.setState({
-      revisions: revisions,
-    })
+      versions: versions,
+    });
   }
 
   componentWillMount() {
     ProtocolStore.addChangeListener(this._onLoad);
-    // fetch Mds
+    ProtocolStore.fetchProtocolVersions(this.props.params.protocolId);
   }
 
   componentWillUnmount() {
@@ -30,13 +33,13 @@ class ProtocolViewPage extends React.Component {
   }
 
   render() {
-    let revisions = this.state.revisions;
-    if(!revisions.length) {
+    let versions = this.state.versions;
+    if(!versions.length) {
       return <div>Oops! Looks like this protocol doesn't exist</div>
     }
 
     let scope = null;
-    if (revisions[0].private) {
+    if (versions[0].private) {
       scope = <span className="protocol-view-scope label label-warning">Private</span>
     } else {
       scope = <span className="protocol-view-scope label label-info">Public</span>
@@ -50,7 +53,7 @@ class ProtocolViewPage extends React.Component {
             <div className='protocol-view-header vertical-align'>
               <span className='protocol-list-item-name'>
                 {//'delta / protocol' + this.props.params.protocolId
-                  revisions[0].owner + ' / ' + revisions[0].name
+                  versions[0].user.first_name + ' / ' + versions[0].title
                 }
               </span>
 
@@ -68,7 +71,7 @@ class ProtocolViewPage extends React.Component {
           <div className='col-lg-12'>
 
             <div className='protocol-view-body'>
-              <ProtocolViewBodySwitcher revisions={revisions} currentRevision={revisions[0]}/>
+              <ProtocolViewBodySwitcher versions={versions} currentVersion={versions[0]}/>
             </div>
 
           </div>

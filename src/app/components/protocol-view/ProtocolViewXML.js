@@ -1,5 +1,5 @@
 import React from 'react';
-import * as moment from 'moment';
+import moment from 'moment';
 
 class ProtocolViewXML extends React.Component {
   constructor(props) {
@@ -9,16 +9,16 @@ class ProtocolViewXML extends React.Component {
   }
 
   viewCurrent() {
-    this.props.switchRevision(this.props.currentRevision);
+    this.props.switchVersion(this.props.currentVersion);
   }
 
   render() {
-    let revisionSwitcher = null;
-    if (this.props.revision.revision_date !== this.props.currentRevision.revision_date) {
-      revisionSwitcher =
+    let versionSwitcher = null;
+    if (this.props.version.updated_at !== this.props.currentVersion.updated_at) {
+      versionSwitcher =
         <a href='#' onClick={this.viewCurrent} >View current</a>
     }
-    let ts = this.props.revision.revision_date;
+    let ts = this.props.version.updated_at;
 
     return (
       <div className='protocol-view-xml-container'>
@@ -28,11 +28,11 @@ class ProtocolViewXML extends React.Component {
 
             <div className='protocol-view-xml-revision-container'>
               <span className='protocol-view-xml-current-revision'>
-                Viewing {moment.unix(ts).format('YYYY/MM/DD')}
+                Viewing {moment(ts).format('YYYY/MM/DD')}
               </span>
 
               <span className='protocol-view-xml-revision-switcher'>
-                {revisionSwitcher}
+                {versionSwitcher}
               </span>
             </div>
 
@@ -45,7 +45,7 @@ class ProtocolViewXML extends React.Component {
 
             <div className='protocol-view-xml-body'>
               <pre><code>
-                {this.props.revision.content}
+                {this.props.version.content}
               </code></pre>
             </div>
 

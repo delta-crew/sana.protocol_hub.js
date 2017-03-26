@@ -7,8 +7,8 @@ class ProtocolViewHistory extends React.Component {
     return (
       <div className='protocol-view-body-history-container'>
         <ProtocolViewHistoryList
-            revisions={this.props.revisions}
-            switchRevision={this.props.switchRevision}
+            versions={this.props.versions}
+            switchVersion={this.props.switchVersion}
             switchView={this.props.switchView} />
       </div>
     );

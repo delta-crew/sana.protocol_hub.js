@@ -6,11 +6,11 @@ class ProtocolViewHistoryList extends React.Component {
   render() {
     return (
       <div className='protocol-view-history-list'>
-        {this.props.revisions.map((revision) =>
+        {this.props.versions.map((version) =>
           <ProtocolViewHistoryListItem
-              key={revision.revision_date}
-              revision={revision}
-              switchRevision={this.props.switchRevision}
+              key={version.version}
+              version={version}
+              switchVersion={this.props.switchVersion}
               switchView={this.props.switchView} />
         )}
       </div>

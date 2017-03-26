@@ -11,7 +11,7 @@ class ProtocolViewBodySwitcher extends React.Component {
     super(props);
     this.state = {
       view: XML_VIEW,
-      revision: props.revisions[0],
+      version: props.versions[0],
     }
     this.switchViewXML = this.switchView.bind(this, XML_VIEW);
     this.switchViewHistory = this.switchView.bind(this, HISTORY_VIEW);
@@ -21,22 +21,22 @@ class ProtocolViewBodySwitcher extends React.Component {
     this.setState({view: view});
   }
 
-  switchRevision(revision) {
-    this.setState({revision: revision});
+  switchVersion(version) {
+    this.setState({version: version});
   }
 
   render() {
     let currentView = null;
     if (this.state.view === XML_VIEW) {
       currentView =
-        <ProtocolViewXML revision={this.state.revision}
-            currentRevision={this.props.currentRevision}
-            switchRevision={this.switchRevision.bind(this)} />
+        <ProtocolViewXML version={this.state.version}
+            currentVersion={this.props.currentVersion}
+            switchVersion={this.switchVersion.bind(this)} />
     } else if (this.state.view == HISTORY_VIEW) {
       currentView =
         <ProtocolViewHistory
-            revisions={this.props.revisions}
-            switchRevision={this.switchRevision.bind(this)}
+            versions={this.props.versions}
+            switchVersion={this.switchVersion.bind(this)}
             switchView={this.switchView.bind(this)} />
     }
 
