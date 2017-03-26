@@ -6,8 +6,9 @@ import SearchResultsList from './SearchResultsList';
 class SearchResultsPage extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      results: ProtocolStore.getAll()
+      results: [],
     }
   }
 
@@ -18,9 +19,15 @@ class SearchResultsPage extends React.Component {
     });
   }
 
+  componentWillReceiveProps(props) {
+    const { query } = this.props.location.query;
+    ProtocolStore.fetchPublicProtocols(query);
+  }
+
   componentWillMount() {
+    const { query } = this.props.location.query;
     ProtocolStore.addChangeListener(this._onSearch);
-    //fetch this.props.params.query;
+    ProtocolStore.fetchPublicProtocols(query);
   }
 
   componentWillUnmount() {
@@ -35,11 +42,7 @@ class SearchResultsPage extends React.Component {
 
     return (
       <div>
-        <form>
-          <input type='text' name='query' placeholder='search for protocols...' />
-          <input type='submit' value='Search' />
-        </form>
-
+        <h2>Protocol Directory</h2>
         {results_div}
       </div>
     );

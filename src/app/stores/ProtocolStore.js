@@ -1,29 +1,12 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import ProtocolActions from '../actions/ProtocolActions';
+import ProtocolActionCreator from '../actionCreators/ProtocolActionCreator';
 import OrganizationActions from '../actions/OrganizationActions';
 import StoreActions from '../actions/StoreActions';
 import api from './api';
 import { EventEmitter } from 'events';
 
-let _protocols = [
-  {
-    id: 1,
-    revision: 1,
-    content: '<BODY>CONTENT</BODY>',
-    owner: 'delta',
-    name: 'test protocol 1',
-    private: true,
-    revision_date: 1490327694,
-  }, {
-    id: 1,
-    revision: 2,
-    content: '<BODY>OLD CONTENT</BODY>',
-    owner: 'delta',
-    name: 'test protocol 1',
-    private: true,
-    revision_date: 1400300000,
-  },
-];
+let _protocols = [];
 
 function _clearProtocols() {
   _protocols = [];

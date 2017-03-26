@@ -6,11 +6,11 @@ import UserStore from '../stores/UserStore';
 //import config from '../../../config/app';
 
 class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      query: '',
+      query: this.props.location.query.query,
       logged_in: UserStore.loggedIn(),
     };
 
