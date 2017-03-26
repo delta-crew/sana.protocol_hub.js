@@ -3,35 +3,35 @@ import MdsActions from '../actions/MdsActions';
 
 class MdsActionCreator {
   listMds(mds) {
-    MdsActions.notify({
+    AppDispatcher.notify({
       type: MdsActions.FETCH_MDS,
       mds,
     });
   }
 
   fetchMds(mds) {
-    MdsActions.notify({
+    AppDispatcher.notify({
       type: MdsActions.FETCH_MDS,
       mds,
     });
   }
 
   removeMds(id) {
-    MdsActions.notify({
+    AppDispatcher.notify({
       type: MdsActions.REMOVE_MDS,
       id,
     });
   }
 
   createMds(mds) {
-    MdsActions.notify({
+    AppDispatcher.notify({
       type: MdsActions.CREATE_MDS,
       mds,
     });
   }
 
   updateMds(id, mds) {
-    MdsActions.notify({
+    AppDispatcher.notify({
       type: MdsActions.UPDATE_MDS,
       id,
       updates: mds,
@@ -39,7 +39,7 @@ class MdsActionCreator {
   }
 
   fetchSyncedProtocols(id, protocols) {
-    MdsActions.notify({
+    AppDispatcher.notify({
       type: MdsActions.FETCH_PROTOCOLS,
       id,
       protocols,
@@ -47,7 +47,7 @@ class MdsActionCreator {
   }
 
   addSyncedProtocol(id, protocol) {
-    MdsActions.notify({
+    AppDispatcher.notify({
       type: MdsActions.ADD_PROTOCOL,
       id,
       protocol,
@@ -55,7 +55,7 @@ class MdsActionCreator {
   }
 
   removeSyncedProtocol(mdsId, protocolId) {
-    MdsActions.notify({
+    AppDispatcher.notify({
       type: MdsActions.REMOVE_PROTOCOL,
       mdsId,
       protocolId,

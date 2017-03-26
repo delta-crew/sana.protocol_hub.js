@@ -2,21 +2,12 @@ import AppDispatcher from '../dispatcher/AppDispatcher';
 import OrganizationActions from '../actions/OrganizationActions';
 import OrganizationActionCreator from '../actionCreators/OrganizationActionCreator';
 import StoreActions from '../actions/StoreActions';
-import request from 'superagent-bluebird-promise';
+import api from './api';
 import { EventEmitter } from 'events';
 
-let _organizations = [
-  {
-    name: 'test1',
-    id: 1,
-  },
-  {
-    name: 'test2',
-    id: 2,
-  },
-];
+let _organizations = [];
 
-let _activeOrganization = { name: 'test1', id: 1 };
+let _activeOrganization = null;
 
 function _addOrganization(organization) {
   _organizations.push(organization);
@@ -60,6 +51,10 @@ function _switchActiveOrg(id) {
   if (i > -1) _activeOrganization = _organizations[i];
 }
 
+function _setOrganizations(organizations) {
+  _organizations = organizations;
+}
+
 class OrganizationStore extends EventEmitter {
   constructor() {
     super();
@@ -80,10 +75,20 @@ class OrganizationStore extends EventEmitter {
     return _activeOrganization;
   }
 
-  getGroups(id) {
+  getActiveOrgId() {
+    return _activeOrganization ? _activeOrganization.id : null;
+  }
+
+  getGroups(id = this.getActiveOrgId()) {
     const organization = this.get(id);
-    if (organization) return organization.id;
-    return null;
+    if (organization) return organization.groups;
+    return [];
+  }
+
+  getMembers(id = this.getActiveOrgId()) {
+    const organization = this.get(id);
+    if (organization) return organization.members;
+    return [];
   }
 
   emitChange() {
@@ -114,7 +119,11 @@ class OrganizationStore extends EventEmitter {
         this.emitChange();
         break;
       case OrganizationActions.FETCH_ORGANIZATION:
-        _fetchOrganization(action.page);
+        _fetchOrganization(action.organization);
+        this.emitChange();
+        break;
+      case OrganizationActions.FETCH_ORGANIZATIONS:
+        _setOrganizations(action.organizations);
         this.emitChange();
         break;
 
@@ -151,52 +160,57 @@ class OrganizationStore extends EventEmitter {
     }
   }
 
+  fetchOrganizations() {
+    return api.get(`/organizations/`)
+      .then(({ body: { data } }) => OrganizationActionCreator.fetchOrganizations(data));
+  }
+
   fetchOrganization(id) {
-    return request.get(`/organizations/${id}`)
-      .then(({ data }) => OrganizationActionCreator.fetchOrganization(data));
+    return api.get(`/organizations/${id}`)
+      .then(({ body: { data } }) => OrganizationActionCreator.fetchOrganization(data));
   }
 
   removeOrganization(id) {
-    return request.delete(`/organizations/${id}`)
+    return api.delete(`/organizations/${id}`)
       .then(() => OrganizationActionCreator.removeOrganization(id));
   }
 
   createOrganization(name) {
-    return request.post(`/organizations/`)
+    return api.post(`/organizations/`)
       .send({ name })
-      .then(({ data }) => OrganizationActionCreator.createOrganization(data));
+      .then(({ body: { data } }) => OrganizationActionCreator.createOrganization(data));
   }
 
   fetchGroups(id) {
-    return request.get(`/organizations/${id}/groups`)
-      .then(({ data }) => OrganizationActionCreator.fetchGroups(id, groups));
+    return api.get(`/organizations/${id}/groups`)
+      .then(({ body: { data } }) => OrganizationActionCreator.fetchGroups(id, groups));
   }
 
   addGroup(id, name) {
-    return request.post(`/organizations/${id}/groups/`)
+    return api.post(`/organizations/${id}/groups/`)
       .send({ name })
-      .then(({ data }) => OrganizationActionCreator.addGroup(id, data));
+      .then(({ body: { data } }) => OrganizationActionCreator.addGroup(id, data));
   }
 
   removeGroup(id, groupId) {
-    return request.delete(`/organizations/${id}/groups/${groupId}`)
-      .then(({ data }) => OrganizationActionCreator.removeGroup(id, groupId));
+    return api.delete(`/organizations/${id}/groups/${groupId}`)
+      .then(({ body: { data } }) => OrganizationActionCreator.removeGroup(id, groupId));
   }
 
   fetchMembers(id) {
-    return request.get(`/organizations/${id}/members/`)
-      .then(({ data }) => OrganizationActionCreator.fetchMembers(id, daata));
+    return api.get(`/organizations/${id}/members/`)
+      .then(({ body: { data } }) => OrganizationActionCreator.fetchMembers(id, data));
   }
 
   addMember(id, userId) {
-    return request.post(`/organizations/${id}/members/`)
-      .send({ userId })
-      .then(({ data }) => OrganizationActionCreator.addMember(id, data));
+    return api.post(`/organizations/${id}/members/`)
+      .send({ user: userId })
+      .then(({ body: { data } }) => OrganizationActionCreator.addMember(id, data));
   }
 
   removeMember(id, userId) {
-    return request.delete(`/organizations/${id}/members/${userId}`)
-      .then(({ data }) => OrganizationActionCreator.removeMember(id, userId));
+    return api.delete(`/organizations/${id}/members/${userId}`)
+      .then(({ body: { data } }) => OrganizationActionCreator.removeMember(id, userId));
   }
 }
 

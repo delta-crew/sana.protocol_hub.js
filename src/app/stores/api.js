@@ -1,9 +1,8 @@
 import request from 'superagent-bluebird-promise';
-import url from 'url';
+import { resolve as urlResolve } from 'url';
 
 export class API {
   constructor(endpoint) {
-    console.log(endpoint);
     this.token = null;
     this.endpoint = endpoint;
   }
@@ -29,16 +28,16 @@ export class API {
   }
 
   makeRequest(method, path) {
-    const url = url.resolve(this.endpoint, path);
-    let request = request(method, url);
+    const url = urlResolve(this.endpoint, path);
+    let req = request(method, url);
 
     if (this.token !== null) {
-      request = request.set('Authorization', this.token);
+      req = req.set('Authorization', this.token);
     }
 
-    return request;
+    return req;
   }
 }
 
 // TODO don't hardcode
-export default new API('http://localhost:8000');
+export default new API('http://localhost:8001');

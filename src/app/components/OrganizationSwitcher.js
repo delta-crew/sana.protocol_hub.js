@@ -10,11 +10,14 @@ class OrganizationSwitcher extends React.Component {
     super(props);
 
     this.state = {
-      organizations: OrganizationStore.getAll(),
-    }
+      organizations: [],
+    };
 
     this._onChange = this._onChange.bind(this);
     this._onSelect = this._onSelect.bind(this);
+
+    OrganizationStore.fetchOrganizations();
+    OrganizationStore.addChangeListener(this._onChange);
   }
 
   _onChange() {
@@ -55,11 +58,14 @@ class OrganizationSwitcher extends React.Component {
       link: true,
     });
 
-    let active = OrganizationStore.getActiveOrg();
-    let selected = {
-      name: active.name,
-      id: active.id,
-    };
+    const active = OrganizationStore.getActiveOrg();
+    let selected = {};
+    if (active) {
+      selected = {
+        name: active.name,
+        id: active.id,
+      };
+    }
 
     return (
       <Dropdown list={organizations} selected={selected} onSelect={this._onSelect} />

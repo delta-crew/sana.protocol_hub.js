@@ -9,6 +9,13 @@ class OrganizationActionCreator {
     });
   }
 
+  fetchOrganizations(organizations) {
+    AppDispatcher.notify({
+      type: OrganizationActions.FETCH_ORGANIZATIONS,
+      organizations,
+    });
+  }
+
   fetchOrganization(organization) {
     AppDispatcher.notify({
       type: OrganizationActions.FETCH_ORGANIZATION,
