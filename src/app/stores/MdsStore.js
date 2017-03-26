@@ -118,24 +118,24 @@ class MdsStore extends EventEmitter {
 
   listMds(organizationId) {
     return api.get(`/organizations/${organizationId}/mds_links/`)
-      .then(({ data }) => MdsActionCreator.listMds(data));
+      .then(({ body: { data } }) => MdsActionCreator.listMds(data));
   }
 
   fetchMds(organizationId, mdsId) {
     return api.get(`/organizations/${organizationId}/mds_links/${mdsId}`)
-      .then(({ data }) => MdsActionCreator.fetchMds(data));
+      .then(({ body: { data } }) => MdsActionCreator.fetchMds(data));
   }
 
   updateMds(organizationId, mdsId, name, url) {
     return api.put(`/organizations/${organizationId}/mds_links/${mdsId}`)
       .send({ name, url })
-      .then(({ data }) => MdsActionCreator.updateMds(mdsId, data));
+      .then(({ body: { data } }) => MdsActionCreator.updateMds(mdsId, data));
   }
 
   createMds(organizationId, name, url) {
     return api.post(`/organizations/${organizationId}/mds_links/`)
       .send({ name, url })
-      .then(({ data }) => MdsActionCreator.createMds(data));
+      .then(({ body: { data } }) => MdsActionCreator.createMds(data));
   }
 
   removeMds(organizationId, mdsId) {
@@ -145,18 +145,18 @@ class MdsStore extends EventEmitter {
 
   fetchSyncedProtocols(organizationId, id) {
     return api.get(`/organizations/${organizationId}/mds_links/${id}/protocols/`)
-      .then(({ data }) => MdsActionCreator.fetchSyncedProtocols(id, data));
+      .then(({ body: { data } }) => MdsActionCreator.fetchSyncedProtocols(id, data));
   }
 
   createSyncedProtocol(organizationId, mdsId, protocolId) {
     return api.post(`/organizations/${organizationId}/mds_links/${id}/protocols/`)
       .send({ protocolId })
-      .then(({ data }) => MdsActionCreator.createSyncedProtocol(id, data));
+      .then(({ body: { data } }) => MdsActionCreator.createSyncedProtocol(id, data));
   }
 
   removeSyncedProtocol(organizationId, mdsId, protocolId) {
     return api.delete(`/organizations/${organizationId}/mds_links/${id}/protocols/${protocolId}`)
-      .then(({ data }) => MdsActionCreator.removeSyncedProtocol(id, protocolId));
+      .then(({ body: { data } }) => MdsActionCreator.removeSyncedProtocol(id, protocolId));
   }
 }
 

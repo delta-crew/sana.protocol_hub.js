@@ -112,13 +112,13 @@ class GroupStore extends EventEmitter {
 
   fetchGroup(organizationId, id) {
     return api.get(`/organizations/${organizationId}/groups/${id}`)
-      .then(({ data }) => GroupActionCreator.fetchGroup(data));
+      .then(({ body: { data } }) => GroupActionCreator.fetchGroup(data));
   }
 
   updateGroup(organizationId, id, data) {
     return api.put(`/organizations/${organizationId}/groups/${id}`)
       .send(data)
-      .then(({ data }) => GroupActionCreator.updateGroup(id, data));
+      .then(({ body: { data } }) => GroupActionCreator.updateGroup(id, data));
   }
 
   removeGroup(organizationId, id) {
@@ -129,23 +129,23 @@ class GroupStore extends EventEmitter {
   createGroup(organizationId, name) {
     return api.post(`/organizations/${organizationId}/groups/`)
       .send({ name })
-      .then(({ data }) => GroupActionCreator.createGroup(data));
+      .then(({ body: { data } }) => GroupActionCreator.createGroup(data));
   }
 
   fetchGroupMembers(organizationId, id) {
     return api.get(`/organizations/${organizationId}/groups/${id}`)
-      .then(({ data }) => GroupActionCreator.fetchGroupMembers(id, data));
+      .then(({ body: { data } }) => GroupActionCreator.fetchGroupMembers(id, data));
   }
 
   addGroupMember(organizationId, groupId, memberId) {
     return api.post(`/organizations/${organizationId}/groups/${groupId}/members/`)
       .send({ memberId })
-      .then(({ data }) => GroupActionCreator.addGroupMember(id, data));
+      .then(({ body: { data } }) => GroupActionCreator.addGroupMember(id, data));
   }
 
   removeGroupMember(organizationId, groupId, memberId) {
     return api.delete(`/organizations/${organizationId}/groups/${groupId}/members/${memberId}`)
-      .then(({ data }) => GroupActionCreator.removeGroupMember(groupId, memberId));
+      .then(({ body: { data } }) => GroupActionCreator.removeGroupMember(groupId, memberId));
   }
 }
 

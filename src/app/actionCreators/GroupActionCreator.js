@@ -3,28 +3,28 @@ import GroupActions from '../actions/GroupActions';
 
 class GroupActionCreator {
   fetchGroup(group) {
-    GroupActions.notify({
+    AppDispatcher.notify({
       type: GroupActions.FETCH_GROUP,
       group,
     });
   }
 
   removeGroup(id) {
-    GroupActions.notify({
+    AppDispatcher.notify({
       type: GroupActions.REMOVE_GROUP,
       id,
     });
   }
 
   createGroup(group) {
-    GroupActions.notify({
+    AppDispatcher.notify({
       type: GroupActions.CREATE_GROUP,
       group,
     });
   }
 
   updateGroup(id, group) {
-    GroupActions.notify({
+    AppDispatcher.notify({
       type: GroupActions.UPDATE_GROUP,
       id,
       updates: group,
@@ -32,7 +32,7 @@ class GroupActionCreator {
   }
 
   fetchGroupMembers(id, members) {
-    GroupActions.notify({
+    AppDispatcher.notify({
       type: GroupActions.FETCH_MEMBERS,
       id,
       members,
@@ -40,7 +40,7 @@ class GroupActionCreator {
   }
 
   addGroupMember(id, member) {
-    GroupActions.notify({
+    AppDispatcher.notify({
       type: GroupActions.ADD_MEMBER,
       id,
       member,
@@ -48,7 +48,7 @@ class GroupActionCreator {
   }
 
   removeGroupMember(groupId, memberId) {
-    GroupActions.notify({
+    AppDispatcher.notify({
       type: GroupActions.REMOVE_MEMBER,
       groupId,
       memberId,
