@@ -1,5 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import ProtocolActions from '../actions/ProtocolActions';
+import OrganizationActions from '../actions/OrganizationActions';
 import StoreActions from '../actions/StoreActions';
 import api from './api';
 import { EventEmitter } from 'events';
@@ -92,7 +93,7 @@ class ProtocolStore extends EventEmitter {
   }
 
   emitChange() {
-    this.emit(CHANGE_EVENT);
+    this.emit(StoreActions.CHANGE_EVENT);
   }
 
   addChangeListener(cb) {
