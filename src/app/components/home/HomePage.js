@@ -23,7 +23,7 @@ class HomePage extends React.Component {
 
   componentWillMount() {
     ProtocolStore.addChangeListener(this._onLoad);
-    // fetch Protcols
+    ProtocolStore.fetchProtocols();
   }
 
   componentWillUnmount() {
