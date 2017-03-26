@@ -2,7 +2,7 @@ import AppDispatcher from '../dispatcher/AppDispatcher';
 import UserActions from '../actions/UserActions';
 import StoreActions from '../actions/StoreActions';
 import docCookies from 'mozilla-doc-cookies';
-import request from 'superagent-bluebird-promise';
+import api from './api';
 import { EventEmitter } from 'events';
 
 let _user = {
@@ -31,6 +31,8 @@ class UserStore extends EventEmitter {
       user_data.auth_token = cookie.AUTH_TOKEN_KEY;
 
       _setUser(user_data);
+
+      api.setToken(user_data.auth_token);
     }
   }
 
@@ -74,12 +76,12 @@ class UserStore extends EventEmitter {
   }
 
   fetchMe() {
-    return request.get('/users/me')
+    return api.get('/users/me')
       .then(({ data }) => UserActionCreator.fetchMe(data));
   }
 
   fetchUsers(query) {
-    return request.get('/users/')
+    return api.get('/users/')
       .query({ query })
       .then(({ data }) => UserActionCreator.fetchUsers(data));
   }

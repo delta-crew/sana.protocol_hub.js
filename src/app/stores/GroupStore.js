@@ -3,7 +3,7 @@ import GroupActions from '../actions/GroupActions';
 import OrganizationActions from '../actions/OrganizationActions';
 import GroupActionCreator from '../actionCreators/GroupActionCreator';
 import StoreActions from '../actions/StoreActions';
-import request from 'superagent-bluebird-promise';
+import api from './api';
 import { EventEmitter } from 'events';
 
 let _groups = [{
@@ -111,40 +111,40 @@ class GroupStore extends EventEmitter {
   }
 
   fetchGroup(organizationId, id) {
-    return request.get(`/organizations/${organizationId}/groups/${id}`)
+    return api.get(`/organizations/${organizationId}/groups/${id}`)
       .then(({ data }) => GroupActionCreator.fetchGroup(data));
   }
 
   updateGroup(organizationId, id, data) {
-    return request.put(`/organizations/${organizationId}/groups/${id}`)
+    return api.put(`/organizations/${organizationId}/groups/${id}`)
       .send(data)
       .then(({ data }) => GroupActionCreator.updateGroup(id, data));
   }
 
   removeGroup(organizationId, id) {
-    return request.delete(`/organizations/${organizationId}/groups/${id}`)
+    return api.delete(`/organizations/${organizationId}/groups/${id}`)
       .then(() => GroupActionCreator.removeGroup(id));
   }
 
   createGroup(organizationId, name) {
-    return request.post(`/organizations/${organizationId}/groups/`)
+    return api.post(`/organizations/${organizationId}/groups/`)
       .send({ name })
       .then(({ data }) => GroupActionCreator.createGroup(data));
   }
 
   fetchGroupMembers(organizationId, id) {
-    return request.get(`/organizations/${organizationId}/groups/${id}`)
+    return api.get(`/organizations/${organizationId}/groups/${id}`)
       .then(({ data }) => GroupActionCreator.fetchGroupMembers(id, data));
   }
 
   addGroupMember(organizationId, groupId, memberId) {
-    return request.post(`/organizations/${organizationId}/groups/${groupId}/members/`)
+    return api.post(`/organizations/${organizationId}/groups/${groupId}/members/`)
       .send({ memberId })
       .then(({ data }) => GroupActionCreator.addGroupMember(id, data));
   }
 
   removeGroupMember(organizationId, groupId, memberId) {
-    return request.delete(`/organizations/${organizationId}/groups/${groupId}/members/${memberId}`)
+    return api.delete(`/organizations/${organizationId}/groups/${groupId}/members/${memberId}`)
       .then(({ data }) => GroupActionCreator.removeGroupMember(groupId, memberId));
   }
 }
