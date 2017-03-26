@@ -32,11 +32,12 @@ function _addFieldOnOrganization(id, field, data) {
 
 function _removeFieldOnOrganization(id, field, data) {
   let organization = _organizations.find(({ id: _id }) => id == _id);
-  organization[field] = organization[field].reduce((memo, item) => {
-    if (id !== item.id) {
-      memo.push(item);
-    }
-  });
+  organization[field] = organization[field].filter(item => data !== item.id);
+}
+
+function _removeMemberOfOrganization(id, userId) {
+  let organization = _organizations.find(({ id: _id }) => id == _id);
+  organization.members = organization.members.filter(item => userId !== item.user.id);
 }
 
 function _removeOrganization(id) {
@@ -149,7 +150,7 @@ class OrganizationStore extends EventEmitter {
         this.emitChange();
         break;
       case OrganizationActions.REMOVE_MEMBER:
-        _removeFieldOnOrganization(action.id, 'members', action.id);
+        _removeMemberOfOrganization(action.id, action.userId);
         this.emitChange();
         break;
 
@@ -204,7 +205,7 @@ class OrganizationStore extends EventEmitter {
 
   addMember(id, userId) {
     return api.post(`/organizations/${id}/members/`)
-      .send({ user: userId })
+      .send({ user_id: userId })
       .then(({ body: { data } }) => OrganizationActionCreator.addMember(id, data));
   }
 

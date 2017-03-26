@@ -49,7 +49,7 @@ class App extends React.Component {
       nav_settings = (
         <div className='navbar-right'>
           <span className='glyphicon glyphicon-user user-icon'></span>
-          <Link className='user-settings nav-button' to='settings/members' role='button'>
+          <Link className='user-settings nav-button' to='/settings/members' role='button'>
             {UserStore.getUser().name}
           </Link>
           <Link className='nav-button' to='#' role='button'>

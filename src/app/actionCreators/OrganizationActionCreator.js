@@ -77,10 +77,11 @@ class OrganizationActionCreator {
     });
   }
 
-  removeMember(id) {
+  removeMember(id, userId) {
     AppDispatcher.notify({
       type: OrganizationActions.REMOVE_MEMBER,
       id,
+      userId,
     });
   }
 }

@@ -124,7 +124,7 @@ class MemberManagementPage extends React.Component {
               <h3>Total {members.length}</h3>
             </div>
           </div>
-          <MemberList users={members} />
+          <MemberList organization={organization} users={members} />
           <div className='row'>
             <div className='col-xs-7 member-managment-header-left'>
               <h2>Add Members</h2>

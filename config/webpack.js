@@ -23,7 +23,7 @@ module.exports = {
       },
       {
         test: /\.(woff2?|ttf|eot|svg)$/,
-        loader: 'url?limit=10000',
+        loader: 'url?limit=10000&name=/[name].[ext]',
       },
       {
         test: /bootstrap\/dist\/js\/umd\//,
