@@ -15,9 +15,6 @@ class OrganizationSwitcher extends React.Component {
 
     this._onChange = this._onChange.bind(this);
     this._onSelect = this._onSelect.bind(this);
-
-    OrganizationStore.fetchOrganizations();
-    OrganizationStore.addChangeListener(this._onChange);
   }
 
   _onChange() {
@@ -29,7 +26,7 @@ class OrganizationSwitcher extends React.Component {
 
   componentWillMount() {
     OrganizationStore.addChangeListener(this._onChange);
-    //fetch
+    OrganizationStore.fetchOrganizations();
   }
 
   componentWillUnmount() {

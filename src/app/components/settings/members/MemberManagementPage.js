@@ -25,9 +25,16 @@ class MemberManagementPage extends React.Component {
     if (this.state.organization !== null) {
       OrganizationStore.fetchMembers(this.state.organization.id);
     }
+  }
 
+  componentDidMount() {
     OrganizationStore.addChangeListener(this._onChange);
     UserStore.addChangeListener(this._onChange);
+  }
+
+  componentWillUnmount() {
+    OrganizationStore.removeChangeListener(this._onChange);
+    UserStore.removeChangeListener(this._onChange);
   }
 
   _onChange() {
