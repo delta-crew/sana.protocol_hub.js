@@ -1,7 +1,8 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import ProtocolActions from '../actions/ProtocolActions';
+import OrganizationActions from '../actions/OrganizationActions';
 import StoreActions from '../actions/StoreActions';
-import request from 'superagent-bluebird-promise';
+import api from './api';
 import { EventEmitter } from 'events';
 
 let _protocols = [
@@ -24,6 +25,10 @@ let _protocols = [
   },
 ];
 
+function _clearProtocols() {
+  _protocols = [];
+}
+
 function _addProtocol(protocol) {
   _protocols.push(protocol);
 }
@@ -40,6 +45,15 @@ function _removeProtocol(id) {
     return protocol.id === id;
   });
   _protocols.splice(i, 1);
+}
+
+function _fetchProtocols(protocols) {
+  _protocols = protocols;
+}
+
+function _fetchProtocolVersions(id, versions) {
+  const protocol = _protocols.find(protocol => protocol.id === id);
+  protocol.versions = versions;
 }
 
 class ProtocolStore extends EventEmitter {
@@ -79,7 +93,7 @@ class ProtocolStore extends EventEmitter {
   }
 
   emitChange() {
-    this.emit(CHANGE_EVENT);
+    this.emit(StoreActions.CHANGE_EVENT);
   }
 
   addChangeListener(cb) {
@@ -92,49 +106,85 @@ class ProtocolStore extends EventEmitter {
 
   dispatcherCallback(action) {
     switch(action.type) {
-      case ProtocolActions.CREATE_PROTOCOL:
-        _addProtocol(action.protocol);
+      case OrganizationActions.SWITCH_ACTIVE_ORG:
+        _clearProtocols();
         this.emitChange();
         break;
+
+      case ProtocolActions.FETCH_ORGANIZATION_PROTOCOLS:
+      case ProtocolActions.FETCH_PUBLIC_PROTOCOLS:
+      case ProtocolActions.FETCH_PROTOCOLS:
+        _fetchProtocols(action.protocols);
+        this.emitChange();
+        break;
+
+      case ProtocolActions.FETCH_PROTOCOL_VERSIONS:
+        _fetchProtocolVersions(id, action.versions);
+        this.emitChange();
+        break;
+
       case ProtocolActions.UPDATE_PROTOCOL:
         _updateProtocol(action.id, action.updates)
         this.emitChange();
         break;
-      case ProtocolActions.DELETE_PROTOCOL:
-        _deleteProtocol(action.id);
+
+      case ProtocolActions.ADD_TO_ORGANIZATION:
+        _addProtocol(action.protocol);
         this.emitChange();
         break;
-      case ProtocolActions.FETCH_PROTOCOLS:
-        _fetchProtocols(action.page);
+      case ProtocolActions.REMOVE_FROM_ORGANIZATION:
+        _deleteProtocol(action.id);
         this.emitChange();
         break;
     }
   }
 
   fetchProtocols() {
-    return request.get(`/protocols/`);
+    return api.get(`/protocols/`)
+      .then(({ data }) => ProtocolActionCreator.fetchProtocols(data));
   }
 
-  fetchPublicProtocols() {
-    return request.get(`/protocols/public/`);
-  }
-
-  updateProtocol(id, isPublic) {
-    return request.put(`/protocols/${id}`)
-      .send({ public: isPublic });
+  fetchPublicProtocols(query) {
+    return api.get(`/protocols/public/`)
+      .query({ query })
+      .then(({ data }) => ProtocolActionCreator.fetchPublicProtocols(data));
   }
 
   fetchOrganizationProtocols(id) {
-    return request.get(`/organizations/${id}/protocols/`);
+    return api.get(`/organizations/${id}/protocols/`)
+      .then(({ data }) => ProtocolActionCreator.fetchOrganizationProtocols(id, data));
+  }
+
+  fetchProtocol(id) {
+    return api.get(`/protocols/${id}`)
+      .then(({ data }) => ProtocolActionCreator.fetchProtocol(id, data));
+  }
+
+  fetchProtocolVersions(id) {
+    return api.get(`/protocols/${id}/versions/`)
+      .then(({ data }) => ProtocolActionCreator.fetchProtocol(id, data));
+  }
+
+  updateProtocol(id, isPublic) {
+    return api.put(`/protocols/${id}`)
+      .send({ public: isPublic })
+      .then(({ data }) => ProtocolActionCreator.updateProtocol(id, data));
+  }
+
+  fetchOrganizationProtocols(id) {
+    return api.get(`/organizations/${id}/protocols/`)
+      .then(({ data }) => ProtocolActionCreator.fetchOrganizationProtocols(id, data));
   }
 
   addProtocolToOrganization(organizationId, protocolId) {
-    return request.post(`/organizations/${organizationId}/protocols/`)
-      .send({ protocolId });
+    return api.post(`/organizations/${organizationId}/protocols/`)
+      .send({ protocolId })
+      .then(({ data }) => ProtocolActionCreator.addProtocolToOrganization(organizationId, data));
   }
 
   removeProtocolFromOrganization(organizationId, protocolId) {
-    return request.delete(`/organizations/${organizationId}/protocols/${protocolId}`);
+    return api.delete(`/organizations/${organizationId}/protocols/${protocolId}`)
+      .then(() => ProtocolActionCreator.removeProtocolFromOrganization(organizationId, protocolId));
   }
 }
 

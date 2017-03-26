@@ -1,16 +1,22 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import UserActions from '../actions/ProtocolActions';
+import UserActions from '../actions/UserActions';
 import StoreActions from '../actions/StoreActions';
 import docCookies from 'mozilla-doc-cookies';
-import request from 'superagent-bluebird-promise';
+import api from './api';
 import { EventEmitter } from 'events';
 
 let _user = {
   name: 'Test User',
 };
 
+let _users = [];
+
 function _setUser(user) {
   _user = user;
+}
+
+function _setUsers(users) {
+  _users = users;
 }
 
 class UserStore extends EventEmitter {
@@ -25,11 +31,17 @@ class UserStore extends EventEmitter {
       user_data.auth_token = cookie.AUTH_TOKEN_KEY;
 
       _setUser(user_data);
+
+      api.setToken(user_data.auth_token);
     }
   }
 
   getUser() {
     return _user;
+  }
+
+  getUsers() {
+    return _users;
   }
 
   loggedIn() {
@@ -58,7 +70,20 @@ class UserStore extends EventEmitter {
         _setUser({});
         this.emitChange();
         break;
+
+      case UserActions.FETCH_USERS:
     }
+  }
+
+  fetchMe() {
+    return api.get('/users/me')
+      .then(({ data }) => UserActionCreator.fetchMe(data));
+  }
+
+  fetchUsers(query) {
+    return api.get('/users/')
+      .query({ query })
+      .then(({ data }) => UserActionCreator.fetchUsers(data));
   }
 }
 
