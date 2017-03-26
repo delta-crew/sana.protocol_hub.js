@@ -3,14 +3,14 @@ import UserActions from '../actions/UserActions';
 
 class UserActionCreator {
   fetchMe(user) {
-    UserActions.notify({
+    AppDispatcher.notify({
       type: UserActions.LOGIN,
       user,
     });
   }
 
   fetchUsers(users) {
-    UserActions.notify({
+    AppDispatcher.notify({
       type: UserActions.FETCH_USERS,
       users,
     });

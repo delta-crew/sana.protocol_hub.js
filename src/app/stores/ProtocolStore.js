@@ -141,45 +141,45 @@ class ProtocolStore extends EventEmitter {
 
   fetchProtocols() {
     return api.get(`/protocols/`)
-      .then(({ data }) => ProtocolActionCreator.fetchProtocols(data));
+      .then(({ body: { data } }) => ProtocolActionCreator.fetchProtocols(data));
   }
 
   fetchPublicProtocols(query) {
     return api.get(`/protocols/public/`)
       .query({ query })
-      .then(({ data }) => ProtocolActionCreator.fetchPublicProtocols(data));
+      .then(({ body: { data } }) => ProtocolActionCreator.fetchPublicProtocols(data));
   }
 
   fetchOrganizationProtocols(id) {
     return api.get(`/organizations/${id}/protocols/`)
-      .then(({ data }) => ProtocolActionCreator.fetchOrganizationProtocols(id, data));
+      .then(({ body: { data } }) => ProtocolActionCreator.fetchOrganizationProtocols(id, data));
   }
 
   fetchProtocol(id) {
     return api.get(`/protocols/${id}`)
-      .then(({ data }) => ProtocolActionCreator.fetchProtocol(id, data));
+      .then(({ body: { data } }) => ProtocolActionCreator.fetchProtocol(id, data));
   }
 
   fetchProtocolVersions(id) {
     return api.get(`/protocols/${id}/versions/`)
-      .then(({ data }) => ProtocolActionCreator.fetchProtocol(id, data));
+      .then(({ body: { data } }) => ProtocolActionCreator.fetchProtocol(id, data));
   }
 
   updateProtocol(id, isPublic) {
     return api.put(`/protocols/${id}`)
       .send({ public: isPublic })
-      .then(({ data }) => ProtocolActionCreator.updateProtocol(id, data));
+      .then(({ body: { data } }) => ProtocolActionCreator.updateProtocol(id, data));
   }
 
   fetchOrganizationProtocols(id) {
     return api.get(`/organizations/${id}/protocols/`)
-      .then(({ data }) => ProtocolActionCreator.fetchOrganizationProtocols(id, data));
+      .then(({ body: { data } }) => ProtocolActionCreator.fetchOrganizationProtocols(id, data));
   }
 
   addProtocolToOrganization(organizationId, protocolId) {
     return api.post(`/organizations/${organizationId}/protocols/`)
       .send({ protocolId })
-      .then(({ data }) => ProtocolActionCreator.addProtocolToOrganization(organizationId, data));
+      .then(({ body: { data } }) => ProtocolActionCreator.addProtocolToOrganization(organizationId, data));
   }
 
   removeProtocolFromOrganization(organizationId, protocolId) {

@@ -16,6 +16,8 @@ class AddOrganizationPage extends React.Component {
 
   handleSave(event) {
     OrganizationStore.createOrganization(this.state.name);
+    this.props.router.push('/settings/members');
+    event.preventDefault();
   }
 
   handleName(event) {
@@ -31,17 +33,19 @@ class AddOrganizationPage extends React.Component {
           <h2>Create an Organization</h2>
         </div>
 
-        <form className='add-organization-form'>
+        <form className='add-organization-form' onSubmit={this.handleSave}>
           <label className='add-mds-form-label'>
             Name<br />
             <input type='text' size='100' value={this.state.name} onChange={this.handleName} />
+            <br />
+            <button type='submit' className='btn btn-success'>
+              <span className='glyphicon glyphicon-floppy-disk' aria-hidden='true'></span>
+              {' '}Save Organization
+            </button>
           </label>
         </form>
 
         <div className='save-mds-button' onClick={this.handleSave}>
-          <a href='#' className='btn btn-success'>
-            <span className='glyphicon glyphicon-floppy-disk' aria-hidden='true'></span> Save Organization
-          </a>
         </div>
       </div>
     );

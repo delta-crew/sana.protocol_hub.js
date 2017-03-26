@@ -1,5 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import UserActions from '../actions/UserActions';
+import UserActionCreator from '../actionCreators/UserActionCreator';
 import StoreActions from '../actions/StoreActions';
 import docCookies from 'mozilla-doc-cookies';
 import api from './api';
@@ -49,7 +50,7 @@ class UserStore extends EventEmitter {
   }
 
   emitChange() {
-    this.emit(CHANGE_EVENT);
+    this.emit(StoreActions.CHANGE_EVENT);
   }
 
   addChangeListener(cb) {
@@ -72,18 +73,21 @@ class UserStore extends EventEmitter {
         break;
 
       case UserActions.FETCH_USERS:
+        _setUsers(action.users);
+        this.emitChange();
+        break;
     }
   }
 
   fetchMe() {
     return api.get('/users/me')
-      .then(({ data }) => UserActionCreator.fetchMe(data));
+      .then(({ body: { data } }) => UserActionCreator.fetchMe(data));
   }
 
   fetchUsers(query) {
     return api.get('/users/')
       .query({ query })
-      .then(({ data }) => UserActionCreator.fetchUsers(data));
+      .then(({ body: { data } }) => UserActionCreator.fetchUsers(data));
   }
 }
 

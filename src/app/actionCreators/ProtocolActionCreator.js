@@ -3,35 +3,35 @@ import ProtocolActions from '../actions/ProtocolActions';
 
 class ProtocolActionCreator {
   fetchProtocols(protocols) {
-    ProtocolActions.notify({
+    AppDispatcher.notify({
       type: ProtocolActions.FETCH_PROTOCOLS,
       protocols,
     });
   }
 
   fetchPublicProtocols(protocols) {
-    ProtocolActions.notify({
+    AppDispatcher.notify({
       type: ProtocolActions.FETCH_PUBLIC_PROTOCOLS,
       protocols,
     });
   }
 
   fetchOrganizationProtocols(protocols) {
-    ProtocolActions.notify({
+    AppDispatcher.notify({
       type: ProtocolActions.FETCH_ORGANIZATION_PROTOCOLS,
       protocols,
     });
   }
 
   fetchProtocol(protocol) {
-    ProtocolActions.notify({
+    AppDispatcher.notify({
       type: ProtocolActions.FETCH_PROTOCOL,
       protocol,
     });
   }
 
   fetchProtocolVersions(id, versions) {
-    ProtocolActions.notify({
+    AppDispatcher.notify({
       type: ProtocolActions.FETCH_PROTOCOL,
       id,
       versions,
@@ -39,21 +39,21 @@ class ProtocolActionCreator {
   }
 
   removeProtocolFromOrganization(organizationId, id) {
-    ProtocolActions.notify({
+    AppDispatcher.notify({
       type: ProtocolActions.REMOVE_PROTOCOL,
       id,
     });
   }
 
   addProtocolToOrganization(organizationId, protocol) {
-    ProtocolActions.notify({
+    AppDispatcher.notify({
       type: ProtocolActions.REMOVE_PROTOCOL,
       protocol,
     });
   }
 
   updateProtocol(id, protocol) {
-    ProtocolActions.notify({
+    AppDispatcher.notify({
       type: ProtocolActions.UPDATE_PROTOCOL,
       id,
       updates: protocol,
