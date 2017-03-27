@@ -44,7 +44,13 @@ class SyncPage extends React.Component {
 
   _loadProtocols() {
     let protocols = ProtocolStore.getAll();
-    let synced_protocols = MdsStore.get(this.state.mdsId).synced_protocols || [];
+    let synced_protocols = MdsStore.getSynchronizedProtocols(this.state.mdsId).map(p => {
+      const org_protocol = ProtocolStore.get(p.protocol.id)
+
+      return Object.assign({
+        willUpdate: p.synchronized_version < (org_protocol ? org_protocol.version : 0),
+      }, p.protocol);
+    });
     let org_protocols = protocols.filter((protocol) => {
       let i = synced_protocols.findIndex((synced_protocol) => {
         return synced_protocol.id === protocol.id;
@@ -63,6 +69,7 @@ class SyncPage extends React.Component {
     const { mdsId, orgId } = this.state;
 
     MdsStore.addChangeListener(this._loadMds);
+    MdsStore.addChangeListener(this._loadProtocols);
     ProtocolStore.addChangeListener(this._loadProtocols);
 
     MdsStore.fetchMds(orgId, mdsId);
@@ -72,6 +79,7 @@ class SyncPage extends React.Component {
 
   componentWillUnmount() {
     MdsStore.removeChangeListener(this._loadMds);
+    MdsStore.removeChangeListener(this._loadProtocols);
     ProtocolStore.removeChangeListener(this._loadProtocols);
   }
 
@@ -87,36 +95,17 @@ class SyncPage extends React.Component {
     });
   }
 
-  onSyncClick(name) {
+  onSyncClick(id) {
     const { orgId, mdsId } = this.state;
     let synced_protocols = this.state.synced_protocols;
     let org_protocols = this.state.org_protocols;
-    let i = synced_protocols.indexOf(name);
+    let i = synced_protocols.findIndex(p => p.id === id);
 
     let p = synced_protocols[i];
 
     org_protocols.push(p);
-    org_protocols.sort((a, b) => a.localeCompare(b))
     synced_protocols.splice(i, 1);
-    this.setState({
-      synced_protocols: synced_protocols,
-      org_protocols: org_protocols
-    });
-
-    MdsStore.createSyncedProtocol(orgId, mdsId, p.id);
-  }
-
-  onOrgClick(name) {
-    const { orgId, mdsId } = this.state;
-    let synced_protocols = this.state.synced_protocols;
-    let org_protocols = this.state.org_protocols;
-    let i = org_protocols.indexOf(name);
-
-    let p = org_protocols[i];
-
-    synced_protocols.push(org_protocols[i]);
-    synced_protocols.sort((a, b) => a.localeCompare(b))
-    org_protocols.splice(i, 1);
+    synced_protocols.sort((a, b) => a.id - b.id);
     this.setState({
       synced_protocols: synced_protocols,
       org_protocols: org_protocols
@@ -125,9 +114,30 @@ class SyncPage extends React.Component {
     MdsStore.removeSyncedProtocol(orgId, mdsId, p.id);
   }
 
+  onOrgClick(id) {
+    const { orgId, mdsId } = this.state;
+    let synced_protocols = this.state.synced_protocols;
+    let org_protocols = this.state.org_protocols;
+    let i = org_protocols.findIndex(p => p.id === id);
+
+    let p = org_protocols[i];
+
+    synced_protocols.push(org_protocols[i]);
+    org_protocols.splice(i, 1);
+    synced_protocols.sort((a, b) => a.id - b.id);
+    this.setState({
+      synced_protocols: synced_protocols,
+      org_protocols: org_protocols
+    });
+
+    MdsStore.createSyncedProtocol(orgId, mdsId, p.id);
+  }
+
   _synchronizeMds(e) {
     const { mdsId, orgId } = this.state;
-    MdsStore.synchronize(orgId, mdsId);
+    MdsStore.synchronize(orgId, mdsId).then(() => {
+      MdsStore.fetchSyncedProtocols(orgId, mdsId);
+    });
     e.preventDefault();
   }
 

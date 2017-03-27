@@ -12,7 +12,7 @@ class ProtocolList extends React.Component {
           {/*<ProtocolListToolbar />*/}
           <div className='mdsprotocol-item-group'>
             {this.props.protocols.map((protocol) => 
-              <ProtocolListItem key={protocol.id} name={protocol.name} onClick={this.props.onItemClick}/>
+              <ProtocolListItem key={protocol.id} id={protocol.id} title={protocol.title} onClick={this.props.onItemClick}/>
             )}
           </div>
         </div>

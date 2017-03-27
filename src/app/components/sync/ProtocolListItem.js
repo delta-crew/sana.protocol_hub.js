@@ -8,13 +8,24 @@ class ProtocolListItem extends React.Component {
   }
 
   handleClick(e) {
-    this.props.onClick(this.props.name);
+    this.props.onClick(this.props.id);
   }
 
   render() {
+    let className = 'mdsprotocol-item';
+
+    if (this.props.willUpdate) {
+      className = className + ' will-update';
+    }
+
     return (
-      <div className='mdsprotocol-item' onClick={this.handleClick}>
-        <h3>{this.props.name}</h3>
+      <div className={className} onClick={this.handleClick}>
+        <h3>
+          {this.props.title}
+          {this.props.willUpdate && (
+            <span className="update-caption"> (updated)</span>
+          )}
+        </h3>
       </div>
     );
   }

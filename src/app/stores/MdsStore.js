@@ -44,12 +44,12 @@ function _removeMds(id) {
 }
 
 function _addSyncedProtocol(mdsId, protocol) {
-  const mds = mdss.find(({ id }) => mdsId === id);
+  const mds = _mds.find(({ id }) => mdsId === id);
   mds.protocols.push(protocol);
 }
 
 function _removeSyncedProtocol(mdsId, protocolId) {
-  const mds = mdss.find(({ id }) => mdsId === id);
+  const mds = _mds.find(({ id }) => mdsId === id);
   const i = mds.protocols.findIndex(({ id }) => protocolId === id);
   mds.protocols.splice(i, 1);
 }
@@ -69,6 +69,11 @@ class MdsStore extends EventEmitter {
       return mds.id === id;
     });
     return _mds[i];
+  }
+
+  getSynchronizedProtocols(id) {
+    const mds = this.get(id)
+    return mds ? mds.protocols || [] : [];
   }
 
   emitChange() {
@@ -163,18 +168,18 @@ class MdsStore extends EventEmitter {
   }
 
   createSyncedProtocol(organizationId, mdsId, protocolId) {
-    return api.post(`/organizations/${organizationId}/mds_links/${id}/protocols/`)
-      .send({ protocolId })
-      .then(({ body: { data } }) => MdsActionCreator.createSyncedProtocol(id, data));
+    return api.post(`/organizations/${organizationId}/mds_links/${mdsId}/protocols/`)
+      .send({ protocol_id: protocolId })
+      .then(({ body: { data } }) => MdsActionCreator.createSyncedProtocol(mdsId, data));
   }
 
   removeSyncedProtocol(organizationId, mdsId, protocolId) {
-    return api.delete(`/organizations/${organizationId}/mds_links/${id}/protocols/${protocolId}`)
-      .then(({ body: { data } }) => MdsActionCreator.removeSyncedProtocol(id, protocolId));
+    return api.delete(`/organizations/${organizationId}/mds_links/${mdsId}/protocols/${protocolId}`)
+      .then(({ body: { data } }) => MdsActionCreator.removeSyncedProtocol(mdsId, protocolId));
   }
 
   synchronize(organizationId, mdsId) {
-    return api.post(`/organizations/${organizationId}/mds_links/${id}/synchronize`)
+    return api.post(`/organizations/${organizationId}/mds_links/${mdsId}/synchronize`)
       .then(() => MdsActionCreator.synchronize(organizationId, mdsId));
   }
 }

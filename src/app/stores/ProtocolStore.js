@@ -62,7 +62,7 @@ class ProtocolStore extends EventEmitter {
   }
 
   get(id) {
-    let revisions = getAllRevisions(id);
+    let revisions = this.getAllRevisions(id);
     return revisions[0];
   }
 
@@ -154,9 +154,9 @@ class ProtocolStore extends EventEmitter {
       .then(({ body: { data } }) => ProtocolActionCreator.updateProtocol(id, data));
   }
 
-  addProtocolToOrganization(organizationId, protocolId) {
+  addProtocolToOrganization(organizationId, protocolId, version) {
     return api.post(`/organizations/${organizationId}/protocols/`)
-      .send({ protocolId })
+      .send({ protocol_id: protocolId, version })
       .then(({ body: { data } }) => ProtocolActionCreator.addProtocolToOrganization(organizationId, data));
   }
 

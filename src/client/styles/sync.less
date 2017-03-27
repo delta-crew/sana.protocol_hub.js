@@ -76,8 +76,19 @@
   margin-bottom: 10px;
 }
 
-.mdsprotocol-item:hover {
-  background: @grey-bg-light;
+.mdsprotocol-item {
+  &:hover {
+    background: @grey-bg-light;
+  }
+
+  &.will-update {
+    background: @green-bg-light;
+  }
+
+  .update-caption {
+    color: @grey-text;
+    font-size: 0.5em;
+  }
 }
 
 nav#mdsprocedure-list-toolbar{

@@ -46,7 +46,7 @@ class MdsActionCreator {
     });
   }
 
-  addSyncedProtocol(id, protocol) {
+  createSyncedProtocol(id, protocol) {
     AppDispatcher.notify({
       type: MdsActions.ADD_PROTOCOL,
       id,
@@ -62,7 +62,7 @@ class MdsActionCreator {
     });
   }
 
-  removeSyncedProtocol(organizationId, mdsId) {
+  synchronize(organizationId, mdsId) {
     AppDispatcher.notify({
       type: MdsActions.SYNCHRONIZE,
       organizationId,
