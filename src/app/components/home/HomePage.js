@@ -12,10 +12,12 @@ class HomePage extends React.Component {
     this.state = {
       protocols: ProtocolStore.getLatest(),
     }
+
+    this._onLoad = this._onLoad.bind(this);
   }
 
   _onLoad() {
-    let results = ProtocolStore.getLatest();
+    let protocols = ProtocolStore.getLatest();
     this.setState({
       protocols: protocols
     });

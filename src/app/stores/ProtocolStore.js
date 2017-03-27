@@ -3,6 +3,7 @@ import ProtocolActions from '../actions/ProtocolActions';
 import ProtocolActionCreator from '../actionCreators/ProtocolActionCreator';
 import OrganizationActions from '../actions/OrganizationActions';
 import StoreActions from '../actions/StoreActions';
+import ProtocolActionCreator from '../actionCreators/ProtocolActionCreator';
 import api from './api';
 import { EventEmitter } from 'events';
 

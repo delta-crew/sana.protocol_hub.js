@@ -6,12 +6,12 @@ class HomeProtocolListItem extends React.Component {
     return (
       <div className='protocol-list-item'>
         <span className='protocol-list-item-left'>
-          <Link to={'/protocol/' + this.props.protocolId} className='protocol-list-item-name'>{this.props.name}</Link>
-          <a href='#' className='home-protocol-edit'>Edit</a>
+          <Link to={'/protocol/' + this.props.protocolId} className='protocol-list-item-name'>{this.props.title}</Link>
+          {/* TODO }<a href='' className='home-protocol-edit'>Edit</a>*/}
         </span>
       </div>
     );
   }
 }
 
-module.exports = HomeProtocolListItem;
+export default HomeProtocolListItem;
