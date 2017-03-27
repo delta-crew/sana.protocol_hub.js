@@ -3,8 +3,6 @@ import { Link, browserHistory } from 'react-router';
 
 import UserStore from '../stores/UserStore';
 
-//import config from '../../../config/app';
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -14,6 +12,8 @@ class App extends React.Component {
       logged_in: UserStore.loggedIn(),
     };
 
+    // TODO Don't hardcode!
+    this.builderUrl = 'http://localhost:8080';
     this._onLoad = this._onLoad.bind(this);
     this.handleQuery = this.handleQuery.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
@@ -44,7 +44,10 @@ class App extends React.Component {
   }
 
   render() {
-    let nav_settings = <div className='navbar-right'><a className='nav-button' href='' >Login</a></div>;
+    let nav_settings =
+      <div className='navbar-right'>
+        <a className='nav-button' href={this.builderUrl + '/en/login/hub'}>Login</a>
+      </div>;
 
     if(this.state.logged_in) {
       nav_settings = (
@@ -53,9 +56,9 @@ class App extends React.Component {
             <span className='glyphicon glyphicon-user user-icon'></span>
             {' '}{UserStore.getUser().first_name}
           </Link>
-          <Link className='nav-button' to='#' role='button'>
+          <a className='nav-button' href={this.builderUrl + '/en/logout/hub'}>
             Logout
-          </Link>
+          </a>
         </div>
       );
     }
