@@ -5,7 +5,6 @@ import { Router, Route, browserHistory } from 'react-router';
 import App from '../../app/components/App';
 import HomePage from '../../app/components/home/HomePage';
 import SyncPage from '../../app/components/sync/SyncPage';
-import ImportPage from '../../app/components/import/ImportPage';
 import AddMdsPage from '../../app/components/mds/AddMdsPage';
 import AddOrganizationPage from '../../app/components/settings/organizations/AddOrganizationPage';
 import SearchResultsPage from '../../app/components/search/SearchResultsPage';
@@ -23,7 +22,6 @@ ReactDOM.render((
           <Route path='/' component={HomePage} />
           <Route path='/search' component={SearchResultsPage} />
           <Route path='/sync' component={SyncPage} />
-          <Route path='/import' component={ImportPage} />
           <Route path='/new/mds' component={AddMdsPage} />
           <Route path='/new/organization' component={AddOrganizationPage} />
           <Route path='/protocol/:protocolId' component={ProtocolViewPage} />

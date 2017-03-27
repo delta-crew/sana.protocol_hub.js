@@ -36,21 +36,16 @@ class HomePage extends React.Component {
     return (
       <div className='home-page'>
         <div className='row vertical-align'>
-          <div className='col-xs-8'>
+          <div className='col-xs-10'>
             <h2>Protocols</h2>
           </div>
 
           <div className='col-xs-2'>
-            <Link to='/mds' className='sync-btn' className='btn btn-default btn-block'>
+            <Link to='/mds' className='sync-btn' className='btn btn-success btn-block'>
               <span className='glyphicon glyphicon-cloud' aria-hidden='true'></span> Sync
             </Link>
           </div>
 
-          <div className='col-xs-2'>
-            <Link to='/import' id='import-btn' className='btn btn-success btn-block'>
-              <span className='glyphicon glyphicon-floppy-disk' aria-hidden='true'></span> Import
-            </Link>
-          </div>
         </div>
 
         <div className='row'>
