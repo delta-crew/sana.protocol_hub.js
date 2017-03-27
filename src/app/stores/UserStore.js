@@ -6,9 +6,7 @@ import docCookies from 'mozilla-doc-cookies';
 import api from './api';
 import { EventEmitter } from 'events';
 
-let _user = {
-  name: 'Test User',
-};
+let _user = {};
 
 let _users = [];
 

@@ -9,6 +9,7 @@ import HomeProtocolList from './HomeProtocolList';
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       protocols: ProtocolStore.getLatest(),
     }
@@ -17,9 +18,8 @@ class HomePage extends React.Component {
   }
 
   _onLoad() {
-    let protocols = ProtocolStore.getLatest();
     this.setState({
-      protocols: protocols
+      protocols: ProtocolStore.getLatest(),
     });
   }
 

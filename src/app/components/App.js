@@ -26,6 +26,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
+    UserStore.fetchMe();
     UserStore.addChangeListener(this._onLoad);
   }
 
@@ -48,9 +49,9 @@ class App extends React.Component {
     if(this.state.logged_in) {
       nav_settings = (
         <div className='navbar-right'>
-          <span className='glyphicon glyphicon-user user-icon'></span>
           <Link className='user-settings nav-button' to='/settings/members' role='button'>
-            {UserStore.getUser().name}
+            <span className='glyphicon glyphicon-user user-icon'></span>
+            {' '}{UserStore.getUser().first_name}
           </Link>
           <Link className='nav-button' to='#' role='button'>
             Logout
