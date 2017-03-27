@@ -1,4 +1,5 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
 
 import OrganizationSwitcher from '../OrganizationSwitcher';
 import OrganizationStore from '../../stores/OrganizationStore';
@@ -19,7 +20,11 @@ class AddMdsPage extends React.Component {
   }
 
   handleSave(event) {
-    MdsStore.createMds(OrganizationStore.getActiveOrg(), this.state.mds_name, this.state.mds_link);
+    let id = OrganizationStore.getActiveOrgId();
+    if(id) {
+      MdsStore.createMds(id, this.state.mds_name, this.state.mds_link);
+      browserHistory.push('/mds');
+    }
   }
 
   handleMdsName(event) {
