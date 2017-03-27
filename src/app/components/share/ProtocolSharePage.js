@@ -64,9 +64,11 @@ class ProtocolSharePage extends React.Component {
 
   handleSave(event) {
     let protocol_id = Number(this.props.params.protocolId);
+    const version = ProtocolStore.get(protocol_id).version;
     Object.keys(this.state.selected_organizations).forEach((organization_id) => {
-      ProtocolStore.addProtocolToOrganization(organization_id, protocol_id);
+      ProtocolStore.addProtocolToOrganization(organization_id, protocol_id, version);
     });
+    this.props.router.push(`/protocol/${protocol_id}`);
     event.preventDefault();
   }
 

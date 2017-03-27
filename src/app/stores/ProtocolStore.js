@@ -175,9 +175,9 @@ class ProtocolStore extends EventEmitter {
       .then(({ body: { data } }) => ProtocolActionCreator.fetchOrganizationProtocols(id, data));
   }
 
-  addProtocolToOrganization(organizationId, protocolId) {
+  addProtocolToOrganization(organizationId, protocolId, version) {
     return api.post(`/organizations/${organizationId}/protocols/`)
-      .send({ protocolId })
+      .send({ protocol_id: protocolId, version })
       .then(({ body: { data } }) => ProtocolActionCreator.addProtocolToOrganization(organizationId, data));
   }
 
