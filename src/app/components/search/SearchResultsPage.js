@@ -44,7 +44,7 @@ class SearchResultsPage extends React.Component {
 
     return (
       <div>
-        <h2>Protocol Directory</h2>
+        <h2>Public Protocol Directory</h2>
         {results_div}
       </div>
     );

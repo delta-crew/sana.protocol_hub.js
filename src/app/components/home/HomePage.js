@@ -37,7 +37,7 @@ class HomePage extends React.Component {
       <div className='home-page'>
         <div className='row vertical-align'>
           <div className='col-xs-10'>
-            <h2>Protocols</h2>
+            <h2>Your Protocols</h2>
           </div>
 
           <div className='col-xs-2'>
