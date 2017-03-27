@@ -23,7 +23,7 @@ class ProtocolListItem extends React.Component {
         <h3>
           {this.props.title}
           {this.props.willUpdate && (
-            <span className="update-caption"> (updated)</span>
+            <span className="update-caption"> (unsynchronized changes)</span>
           )}
         </h3>
       </div>
