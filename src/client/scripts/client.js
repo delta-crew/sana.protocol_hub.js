@@ -10,6 +10,7 @@ import AddMdsPage from '../../app/components/mds/AddMdsPage';
 import AddOrganizationPage from '../../app/components/settings/organizations/AddOrganizationPage';
 import SearchResultsPage from '../../app/components/search/SearchResultsPage';
 import ProtocolViewPage from '../../app/components/protocol-view/ProtocolViewPage';
+import ProtocolSharePage from '../../app/components/share/ProtocolSharePage';
 import MdsManagementPage from '../../app/components/mds/MdsManagementPage';
 import MemberManagementPage from '../../app/components/settings/members/MemberManagementPage';
 import GroupManagementPage from '../../app/components/settings/groups/GroupManagementPage';
@@ -26,6 +27,7 @@ ReactDOM.render((
           <Route path='/new/mds' component={AddMdsPage} />
           <Route path='/new/organization' component={AddOrganizationPage} />
           <Route path='/protocol/:protocolId' component={ProtocolViewPage} />
+          <Route path='/share/:protocolId' component={ProtocolSharePage} />
           <Route path='/mds' component={MdsManagementPage} />
           <Route path='/organizations/:organizationId/mds/:mdsId' component={SyncPage} />
           <Route path='/settings/members' component={MemberManagementPage} />

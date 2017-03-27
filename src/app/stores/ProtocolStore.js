@@ -35,7 +35,11 @@ function _fetchProtocols(protocols) {
 }
 
 function _fetchProtocolVersions(id, versions) {
-  const protocol = _protocols.find(protocol => protocol.id === id);
+ var protocol = _protocols.find(protocol => protocol.id === id);
+  if(!protocol) {
+    _addProtocol(versions[0]);
+    protocol = versions[0];
+  }
   protocol.versions = versions;
 }
 
@@ -54,7 +58,7 @@ class ProtocolStore extends EventEmitter {
     this.getAll().forEach((protocol) => {
       let id = protocol.id;
 
-      if(!latest[id] || latest[id].revision_date < protocol.revision_date) {
+      if(!latest[id] || latest[id].version < protocol.version) {
         latest[id] = protocol;
       }
     });
@@ -62,17 +66,20 @@ class ProtocolStore extends EventEmitter {
   }
 
   get(id) {
-    let revisions = this.getAllRevisions(id);
-    return revisions[0];
+    const protocol = _protocols.find(protocol => protocol.id === id);
+    return protocol;
   }
 
-  getAllRevisions(id) {
-    let revisions = [];
-    this.getAll().forEach((protocol) => {
-      if(protocol.id === id) revisions.push(protocol);
-    });
+  getAllVersions(id) {
+    let protocol = this.get(id);
+    var versions = [];
 
-    return revisions;
+    if(protocol && protocol.versions) {
+      versions = protocol.versions;
+      versions.sort((a, b) => a.version - b.version);
+    }
+
+    return versions;
   }
 
   emitChange() {
@@ -94,6 +101,11 @@ class ProtocolStore extends EventEmitter {
         this.emitChange();
         break;
 
+      case ProtocolActions.FETCH_PROTOCOL:
+        _addProtocol(action.protocol);
+        this.emitChange();
+        break;
+
       case ProtocolActions.FETCH_ORGANIZATION_PROTOCOLS:
       case ProtocolActions.FETCH_PUBLIC_PROTOCOLS:
       case ProtocolActions.FETCH_PROTOCOLS:
@@ -102,7 +114,7 @@ class ProtocolStore extends EventEmitter {
         break;
 
       case ProtocolActions.FETCH_PROTOCOL_VERSIONS:
-        _fetchProtocolVersions(id, action.versions);
+        _fetchProtocolVersions(action.id, action.versions);
         this.emitChange();
         break;
 
@@ -112,12 +124,16 @@ class ProtocolStore extends EventEmitter {
         break;
 
       case ProtocolActions.ADD_TO_ORGANIZATION:
+        /*
         _addProtocol(action.protocol);
         this.emitChange();
+        */
         break;
       case ProtocolActions.REMOVE_FROM_ORGANIZATION:
+        /*
         _deleteProtocol(action.id);
         this.emitChange();
+        */
         break;
     }
   }
@@ -140,12 +156,12 @@ class ProtocolStore extends EventEmitter {
 
   fetchProtocol(id) {
     return api.get(`/protocols/${id}`)
-      .then(({ body: { data } }) => ProtocolActionCreator.fetchProtocol(id, data));
+      .then(({ body: { data } }) => ProtocolActionCreator.fetchProtocol(data));
   }
 
   fetchProtocolVersions(id) {
     return api.get(`/protocols/${id}/versions/`)
-      .then(({ body: { data } }) => ProtocolActionCreator.fetchProtocol(id, data));
+      .then(({ body: { data } }) => ProtocolActionCreator.fetchProtocolVersions(id, data));
   }
 
   updateProtocol(id, isPublic) {

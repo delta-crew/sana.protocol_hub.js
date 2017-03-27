@@ -32,7 +32,7 @@ class ProtocolActionCreator {
 
   fetchProtocolVersions(id, versions) {
     AppDispatcher.notify({
-      type: ProtocolActions.FETCH_PROTOCOL,
+      type: ProtocolActions.FETCH_PROTOCOL_VERSIONS,
       id,
       versions,
     });
