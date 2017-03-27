@@ -6,7 +6,7 @@ class SearchResultsListItem extends React.Component {
     return (
       <div className='search-results-item-group protocol-list-item'>
         <span className='search-results-item-left'>
-          <Link to={'/protocol/' + this.props.protocol.id} className='protocol-list-item-name'>{this.props.protocol.name}</Link>
+          <Link to={'/protocol/' + this.props.protocol.id} className='protocol-list-item-name'>{this.props.protocol.title}</Link>
         </span>
       </div>
     );

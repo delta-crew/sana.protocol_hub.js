@@ -10,6 +10,8 @@ class SearchResultsPage extends React.Component {
     this.state = {
       results: [],
     }
+
+    this._onSearch = this._onSearch.bind(this);
   }
 
   _onSearch() {
@@ -20,7 +22,7 @@ class SearchResultsPage extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    const { query } = this.props.location.query;
+    const { query } = props.location.query;
     ProtocolStore.fetchPublicProtocols(query);
   }
 
