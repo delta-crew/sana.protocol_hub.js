@@ -135,7 +135,7 @@ class ProtocolStore extends EventEmitter {
 
   fetchOrganizationProtocols(id) {
     return api.get(`/organizations/${id}/protocols/`)
-      .then(({ body: { data } }) => ProtocolActionCreator.fetchOrganizationProtocols(id, data));
+      .then(({ body: { data } }) => ProtocolActionCreator.fetchOrganizationProtocols(data));
   }
 
   fetchProtocol(id) {
@@ -152,11 +152,6 @@ class ProtocolStore extends EventEmitter {
     return api.put(`/protocols/${id}`)
       .send({ public: isPublic })
       .then(({ body: { data } }) => ProtocolActionCreator.updateProtocol(id, data));
-  }
-
-  fetchOrganizationProtocols(id) {
-    return api.get(`/organizations/${id}/protocols/`)
-      .then(({ body: { data } }) => ProtocolActionCreator.fetchOrganizationProtocols(id, data));
   }
 
   addProtocolToOrganization(organizationId, protocolId) {

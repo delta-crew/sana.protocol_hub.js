@@ -4,7 +4,7 @@ import MdsActions from '../actions/MdsActions';
 class MdsActionCreator {
   listMds(mds) {
     AppDispatcher.notify({
-      type: MdsActions.FETCH_MDS,
+      type: MdsActions.LIST_MDS,
       mds,
     });
   }
@@ -18,7 +18,7 @@ class MdsActionCreator {
 
   removeMds(id) {
     AppDispatcher.notify({
-      type: MdsActions.REMOVE_MDS,
+      type: MdsActions.DELETE_MDS,
       id,
     });
   }
@@ -59,6 +59,14 @@ class MdsActionCreator {
       type: MdsActions.REMOVE_PROTOCOL,
       mdsId,
       protocolId,
+    });
+  }
+
+  removeSyncedProtocol(organizationId, mdsId) {
+    AppDispatcher.notify({
+      type: MdsActions.SYNCHRONIZE,
+      organizationId,
+      mdsId,
     });
   }
 }

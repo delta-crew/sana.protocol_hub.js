@@ -88,7 +88,7 @@ class OrganizationStore extends EventEmitter {
 
   getMembers(id = this.getActiveOrgId()) {
     const organization = this.get(id);
-    if (organization) return organization.members;
+    if (organization) return organization.members || [];
     return [];
   }
 

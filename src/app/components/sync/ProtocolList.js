@@ -8,8 +8,8 @@ class ProtocolList extends React.Component {
     return (
       <div className='mdsprotocol-list-outer'>
         <div className='mdsprotocol-list-inner'>
-          <h2 className='mdsprotocol-list-title'>Your Protocols</h2>
-          <ProtocolListToolbar />
+          <h2 className='mdsprotocol-list-title'>Organization Protocols</h2>
+          {/*<ProtocolListToolbar />*/}
           <div className='mdsprotocol-item-group'>
             {this.props.protocols.map((protocol) => 
               <ProtocolListItem key={protocol.id} name={protocol.name} onClick={this.props.onItemClick}/>

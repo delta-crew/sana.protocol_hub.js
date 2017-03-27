@@ -17,14 +17,23 @@ function _addMds(mds) {
 }
 
 function _fetchMds(mds) {
-  mds ? _mds = mds : mds = [];
+  let i = _mds.findIndex(item => item.id === mds.id);
+  if (i > -1) {
+    _mds[i] = mds;
+  } else {
+    _mds.push(mds);
+  }
+}
+
+function _listMds(mds) {
+  _mds = mds;
 }
 
 function _updateMds(id, updates) {
   let i = _mds.findIndex((mds) => {
     return mds.id === id;
   });
-  Object.assign(_mds[id], updates);
+  Object.assign(_mds[i], updates);
 }
 
 function _removeMds(id) {
@@ -97,21 +106,27 @@ class MdsStore extends EventEmitter {
         _fetchMds(action.mds);
         this.emitChange();
         break;
+      case MdsActions.LIST_MDS:
+        _listMds(action.mds);
+        this.emitChange();
+        break;
 
-      case MdsActions.FETCH_MEMBERS:
+      case MdsActions.FETCH_PROTOCOLS:
         _updateMds(action.id, { protocols: action.protocols });
         this.emitChange();
         break;
-      case MdsActions.ADD_MEMBER:
+      case MdsActions.ADD_PROTOCOL:
         _updateMds(action.id, {
           protocols: [...this.get(action.id).protocols, action.protocol],
         });
         this.emitChange();
         break;
-      case MdsActions.REMOVE_MEMBER:
+      case MdsActions.REMOVE_PROTOCOL:
         _removeSyncedProtocol(action.mdsId, action.protocolId);
         this.emitChange();
         break;
+
+      default: break;
     }
   }
 
@@ -156,6 +171,11 @@ class MdsStore extends EventEmitter {
   removeSyncedProtocol(organizationId, mdsId, protocolId) {
     return api.delete(`/organizations/${organizationId}/mds_links/${id}/protocols/${protocolId}`)
       .then(({ body: { data } }) => MdsActionCreator.removeSyncedProtocol(id, protocolId));
+  }
+
+  synchronize(organizationId, mdsId) {
+    return api.post(`/organizations/${organizationId}/mds_links/${id}/synchronize`)
+      .then(() => MdsActionCreator.synchronize(organizationId, mdsId));
   }
 }
 

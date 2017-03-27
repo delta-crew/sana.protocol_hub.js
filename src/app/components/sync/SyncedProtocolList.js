@@ -9,7 +9,7 @@ class MdsList extends React.Component {
       <div className='mdsprotocol-list-outer'>
         <div className='mdsprotocol-list-inner'>
           <h2 className='mdsprotocol-list-title'>Synced Protocols</h2>
-          <ProtocolListToolbar />
+          {/*<ProtocolListToolbar />*/}
           <div className='mdsprotocol-item-group'>
             {this.props.protocols.map((protocol) => 
               <ProtocolListItem key={protocol.id} name={protocol.name} onClick={this.props.onItemClick}/>

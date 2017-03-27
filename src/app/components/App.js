@@ -66,7 +66,7 @@ class App extends React.Component {
           <div className='navbar-left'>
             <Link to='/' className='home-button'><span className='glyphicon glyphicon-home'></span></Link>
             <form className='search-bar' onSubmit={this.handleSearch}>
-              <input type='text' value={this.state.query} onChange={this.handleQuery} placeholder=' search protocols' />
+              <input type='text' value={this.state.query} onChange={this.handleQuery} placeholder='search protocol directory' />
             </form>
           </div>
 

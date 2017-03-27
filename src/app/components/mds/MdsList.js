@@ -10,7 +10,7 @@ class MdsList extends React.Component {
       <div className='mds-list'>
         <div>
           {mds.map((mds) =>
-            <MdsListItem key={mds.id} name={mds.name} url={mds.url} id={mds.id} />
+            <MdsListItem key={mds.id} organizationId={mds.organization} name={mds.name} url={mds.url} id={mds.id} />
           )}
         </div>
       </div>

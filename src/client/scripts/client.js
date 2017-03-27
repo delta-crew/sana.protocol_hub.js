@@ -27,7 +27,7 @@ ReactDOM.render((
           <Route path='/new/organization' component={AddOrganizationPage} />
           <Route path='/protocol/:protocolId' component={ProtocolViewPage} />
           <Route path='/mds' component={MdsManagementPage} />
-          <Route path='/mds/:mdsId' component={SyncPage} />
+          <Route path='/organizations/:organizationId/mds/:mdsId' component={SyncPage} />
           <Route path='/settings/members' component={MemberManagementPage} />
           <Route path='/settings/groups' component={GroupManagementPage} />
       </Route>

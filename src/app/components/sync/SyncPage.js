@@ -2,6 +2,7 @@ import React from 'react';
 
 import MdsStore from '../../stores/MdsStore';
 import ProtocolStore from '../../stores/ProtocolStore';
+import OrganizationStore from '../../stores/OrganizationStore';
 import SyncedProtocolList from './SyncedProtocolList';
 import ProtocolList from './ProtocolList';
 
@@ -10,6 +11,8 @@ class SyncPage extends React.Component {
     super(props);
 
     this.state = {
+      mdsId: parseInt(this.props.params.mdsId, 10),
+      orgId: parseInt(this.props.params.organizationId, 10),
       synced_protocols: [],
       org_protocols: [],
       og_mds_name: '',
@@ -21,24 +24,27 @@ class SyncPage extends React.Component {
     this.handleMdsLink = this.handleMdsLink.bind(this);
     this.onSyncClick = this.onSyncClick.bind(this);
     this.onOrgClick = this.onOrgClick.bind(this);
+
+    this._loadMds = this._loadMds.bind(this);
+    this._loadProtocols = this._loadProtocols.bind(this);
+    this._synchronizeMds = this._synchronizeMds.bind(this);
+    this._saveMdsSettings = this._saveMdsSettings.bind(this);
   }
 
   _loadMds() {
-    let mds = MdsStore.get(this.props.params.mdsId);
+    const { mdsId } = this.state;
+    let mds = MdsStore.get(mdsId);
 
     this.setState({
       og_mds_name: mds.name,
       mds_name: mds.name,
-      mds_link: mds.link,
+      mds_link: mds.url,
     });
-
-    // fetch mds protocols
-    // fetch all protocols
   }
 
   _loadProtocols() {
     let protocols = ProtocolStore.getAll();
-    let synced_protocols = MdsStore.get(this.props.mdsId).synced_protocols;
+    let synced_protocols = MdsStore.get(this.state.mdsId).synced_protocols || [];
     let org_protocols = protocols.filter((protocol) => {
       let i = synced_protocols.findIndex((synced_protocol) => {
         return synced_protocol.id === protocol.id;
@@ -54,9 +60,14 @@ class SyncPage extends React.Component {
   }
 
   componentWillMount() {
+    const { mdsId, orgId } = this.state;
+
     MdsStore.addChangeListener(this._loadMds);
     ProtocolStore.addChangeListener(this._loadProtocols);
-    // fetch Mds
+
+    MdsStore.fetchMds(orgId, mdsId);
+    MdsStore.fetchSyncedProtocols(orgId, mdsId);
+    ProtocolStore.fetchOrganizationProtocols(orgId);
   }
 
   componentWillUnmount() {
@@ -77,23 +88,31 @@ class SyncPage extends React.Component {
   }
 
   onSyncClick(name) {
+    const { orgId, mdsId } = this.state;
     let synced_protocols = this.state.synced_protocols;
     let org_protocols = this.state.org_protocols;
     let i = synced_protocols.indexOf(name);
 
-    org_protocols.push(synced_protocols[i]);
+    let p = synced_protocols[i];
+
+    org_protocols.push(p);
     org_protocols.sort((a, b) => a.localeCompare(b))
     synced_protocols.splice(i, 1);
     this.setState({
       synced_protocols: synced_protocols,
       org_protocols: org_protocols
     });
+
+    MdsStore.createSyncedProtocol(orgId, mdsId, p.id);
   }
 
   onOrgClick(name) {
+    const { orgId, mdsId } = this.state;
     let synced_protocols = this.state.synced_protocols;
     let org_protocols = this.state.org_protocols;
     let i = org_protocols.indexOf(name);
+
+    let p = org_protocols[i];
 
     synced_protocols.push(org_protocols[i]);
     synced_protocols.sort((a, b) => a.localeCompare(b))
@@ -102,6 +121,20 @@ class SyncPage extends React.Component {
       synced_protocols: synced_protocols,
       org_protocols: org_protocols
     });
+
+    MdsStore.removeSyncedProtocol(orgId, mdsId, p.id);
+  }
+
+  _synchronizeMds(e) {
+    const { mdsId, orgId } = this.state;
+    MdsStore.synchronize(orgId, mdsId);
+    e.preventDefault();
+  }
+
+  _saveMdsSettings(e) {
+    const { mdsId, orgId, mds_name: name, mds_link: url } = this.state;
+    MdsStore.updateMds(orgId, mdsId, name, url);
+    e.preventDefault();
   }
 
   render() {
@@ -129,10 +162,10 @@ class SyncPage extends React.Component {
               </div>
 
               <div className='mdsprotocol-buttons'>
-                <a href='' className='btn'>
+                <a href='#' className='btn' onClick={this._synchronizeMds}>
                   <span className='glyphicon glyphicon-cloud' aria-hidden='true'></span> Sync to MDS
                 </a>
-                <a href='' className='btn btn-success'>
+                <a href='#' className='btn btn-success' onClick={this._saveMdsSettings}>
                   <span className='glyphicon glyphicon-floppy-disk' aria-hidden='true'></span> Save Changes
                 </a>
               </div>
