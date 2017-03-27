@@ -124,12 +124,16 @@ class ProtocolStore extends EventEmitter {
         break;
 
       case ProtocolActions.ADD_TO_ORGANIZATION:
+        /*
         _addProtocol(action.protocol);
         this.emitChange();
+        */
         break;
       case ProtocolActions.REMOVE_FROM_ORGANIZATION:
+        /*
         _deleteProtocol(action.id);
         this.emitChange();
+        */
         break;
     }
   }
@@ -152,7 +156,7 @@ class ProtocolStore extends EventEmitter {
 
   fetchProtocol(id) {
     return api.get(`/protocols/${id}`)
-      .then(({ body: { data } }) => ProtocolActionCreator.fetchProtocol(id, data));
+      .then(({ body: { data } }) => ProtocolActionCreator.fetchProtocol(data));
   }
 
   fetchProtocolVersions(id) {

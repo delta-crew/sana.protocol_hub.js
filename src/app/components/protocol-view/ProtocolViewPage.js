@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 import ProtocolStore from '../../stores/ProtocolStore';
 import ProtocolViewBodySwitcher from './ProtocolViewBodySwitcher';
@@ -63,8 +64,14 @@ class ProtocolViewPage extends React.Component {
               <span className='protocol-view-builder-link'>
                 <a href='#'>View in builder</a>
               </span>
-            </div>
 
+              <div className='col-xs-2'>
+                <Link to={'/share/' + versions[0].id} className='sync-btn' className='btn btn-default btn-block'>
+                  <span className='glyphicon glyphicon-share-alt' aria-hidden='true'></span> Share
+                </Link>
+              </div>
+
+            </div>
           </div>
         </div>
 
