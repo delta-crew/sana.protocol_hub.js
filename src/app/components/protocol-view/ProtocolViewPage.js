@@ -14,6 +14,8 @@ class ProtocolViewPage extends React.Component {
 
     this.builderUrl = BUILDER_URL;
     this._onLoad = this._onLoad.bind(this);
+    this.handlePrivate = this.handlePrivate.bind(this);
+    this.handlePublic = this.handlePublic.bind(this);
   }
 
   _onLoad() {
@@ -35,9 +37,18 @@ class ProtocolViewPage extends React.Component {
     ProtocolStore.removeChangeListener(this._onLoad);
   }
 
-  handlePublic(isPublic) {
+  handlePrivate(event) {
+    event.preventDefault();
     let id = Number(this.props.params.protocolId);
-    ProtocolStore.updateProtocol(id, isPublic) ;
+    ProtocolStore.updateProtocol(id, false)
+      .finally(() => location.reload());
+  }
+
+  handlePublic(event) {
+    event.preventDefault();
+    let id = Number(this.props.params.protocolId);
+    ProtocolStore.updateProtocol(id, true)
+      .finally(() => location.reload());
   }
 
   render() {
@@ -52,8 +63,8 @@ class ProtocolViewPage extends React.Component {
     if (versions[versions.length-1].public) {
       scope = <span className="protocol-view-scope label label-info">Public</span>;
       publicButton =
-        <a href=''
-            onClick={this.handlePublic.bind(this, false)}
+        <a href='#'
+            onClick={this.handlePrivate}
             className='btn btn-default btn-block'>
           <span
               className='glyphicon glyphicon-eye-close'
@@ -62,8 +73,8 @@ class ProtocolViewPage extends React.Component {
     } else {
       scope = <span className="protocol-view-scope label label-warning">Private</span>
       publicButton =
-        <a href=''
-            onClick={this.handlePublic.bind(this, true)}
+        <a href='#'
+            onClick={this.handlePublic}
             className='btn btn-default btn-block'>
           <span
               className='glyphicon glyphicon-eye-open'
