@@ -28,7 +28,7 @@ class ProtocolViewXML extends React.Component {
 
             <div className='protocol-view-xml-revision-container'>
               <span className='protocol-view-xml-current-revision'>
-                Viewing {moment(ts).format('YYYY/MM/DD')}
+                Viewing {moment(ts).format('YYYY/MM/DD hh:ss')}
               </span>
 
               <span className='protocol-view-xml-revision-switcher'>
