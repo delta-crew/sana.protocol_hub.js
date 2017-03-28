@@ -51,6 +51,7 @@ class App extends React.Component {
     if(this.state.logged_in) {
       nav_settings = (
         <div className='navbar-right'>
+          <a href={BUILDER_URL} className='nav-button'>Go to Builder</a>
           <Link className='user-settings nav-button' to='/settings/members' role='button'>
             <span className='glyphicon glyphicon-user user-icon'></span>
             {' '}{UserStore.getUser().first_name}
