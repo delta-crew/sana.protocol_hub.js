@@ -43,10 +43,15 @@ class ProtocolViewPage extends React.Component {
     }
 
     let scope = null;
-    if (versions[0].public) {
+    if (versions[versions.length-1].public) {
       scope = <span className="protocol-view-scope label label-info">Public</span>
     } else {
       scope = <span className="protocol-view-scope label label-warning">Private</span>
+    }
+
+    let shared = null;
+    if (versions[versions.length-1].shared_versions.length > 0) {
+      shared = <span className="protocol-view-scope label label-info">Shared</span>
     }
 
     return (
@@ -63,6 +68,7 @@ class ProtocolViewPage extends React.Component {
                 </span>
 
                 {scope}
+                {shared}
 
                 <span className='protocol-view-builder-link'>
                   <a href={this.builderUrl + '/en/procedures/' + id} target='_blank'>View in builder</a>
