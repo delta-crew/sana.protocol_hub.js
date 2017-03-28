@@ -21,8 +21,7 @@ function _setUsers(users) {
 class UserStore extends EventEmitter {
   constructor() {
     super();
-    // TODO Don't hardcode!
-    this.builderUrl = 'http://localhost:8080';
+    this.builderUrl = BUILDER_URL;
     this.dispatchToken = AppDispatcher.register(this.dispatcherCallback.bind(this));
 
     let cookie = JSON.parse(docCookies.getItem('sana_AUTH_TOKEN_KEY'));

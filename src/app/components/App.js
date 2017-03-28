@@ -12,8 +12,7 @@ class App extends React.Component {
       logged_in: UserStore.loggedIn(),
     };
 
-    // TODO Don't hardcode!
-    this.builderUrl = 'http://localhost:8080';
+    this.builderUrl = BUILDER_URL;
     this._onLoad = this._onLoad.bind(this);
     this.handleQuery = this.handleQuery.bind(this);
     this.handleSearch = this.handleSearch.bind(this);

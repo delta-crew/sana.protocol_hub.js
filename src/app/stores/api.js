@@ -39,5 +39,4 @@ export class API {
   }
 }
 
-// TODO don't hardcode
-export default new API('http://localhost:8001');
+export default new API(API_URL);

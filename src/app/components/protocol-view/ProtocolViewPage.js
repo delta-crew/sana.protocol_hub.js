@@ -12,6 +12,7 @@ class ProtocolViewPage extends React.Component {
       versions: [],
     }
 
+    this.builderUrl = BUILDER_URL;
     this._onLoad = this._onLoad.bind(this);
   }
 
@@ -35,6 +36,7 @@ class ProtocolViewPage extends React.Component {
   }
 
   render() {
+    let id = Number(this.props.params.protocolId);
     let versions = this.state.versions;
     if(!versions.length) {
       return <div>Oops! Looks like this protocol doesn't exist</div>
@@ -53,17 +55,19 @@ class ProtocolViewPage extends React.Component {
           <div className='col-lg-12'>
 
             <div className='protocol-view-header vertical-align'>
-              <span className='protocol-list-item-name'>
-                {//'delta / protocol' + this.props.params.protocolId
-                  versions[0].user.first_name + ' / ' + versions[0].title
-                }
-              </span>
+              <div className='col-xs-10'>
+                <span className='protocol-list-item-name'>
+                  {//'delta / protocol' + this.props.params.protocolId
+                    versions[0].user.first_name + ' / ' + versions[0].title
+                  }
+                </span>
 
-              {scope}
+                {scope}
 
-              <span className='protocol-view-builder-link'>
-                <a href='#'>View in builder</a>
-              </span>
+                <span className='protocol-view-builder-link'>
+                  <a href={this.builderUrl + '/en/procedures/' + id} target='_blank'>View in builder</a>
+                </span>
+              </div>
 
               <div className='col-xs-2'>
                 <Link to={'/share/' + versions[0].id} className='sync-btn' className='btn btn-default btn-block'>

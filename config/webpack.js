@@ -8,6 +8,13 @@ module.exports = {
     filename: 'bundle.js'
   },
 
+  plugins: [
+    new webpack.DefinePlugin({
+      API_URL: JSON.stringify(process.env.API_URL || 'http://localhost:8001'),
+      BUILDER_URL: JSON.stringify(process.env.BUILDER_URL || 'http://localhost:8080'),
+    }),
+  ],
+
   module: {
     loaders: [
       {
