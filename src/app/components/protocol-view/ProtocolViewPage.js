@@ -35,6 +35,11 @@ class ProtocolViewPage extends React.Component {
     ProtocolStore.removeChangeListener(this._onLoad);
   }
 
+  handlePublic(isPublic) {
+    let id = Number(this.props.params.protocolId);
+    ProtocolStore.updateProtocol(id, isPublic) ;
+  }
+
   render() {
     let id = Number(this.props.params.protocolId);
     let versions = this.state.versions;
@@ -43,10 +48,27 @@ class ProtocolViewPage extends React.Component {
     }
 
     let scope = null;
+    let publicButton = null;
     if (versions[versions.length-1].public) {
-      scope = <span className="protocol-view-scope label label-info">Public</span>
+      scope = <span className="protocol-view-scope label label-info">Public</span>;
+      publicButton =
+        <a href=''
+            onClick={this.handlePublic.bind(this, false)}
+            className='btn btn-default btn-block'>
+          <span
+              className='glyphicon glyphicon-eye-close'
+              aria-hidden='true'></span> Make Private
+        </a>;
     } else {
       scope = <span className="protocol-view-scope label label-warning">Private</span>
+      publicButton =
+        <a href=''
+            onClick={this.handlePublic.bind(this, true)}
+            className='btn btn-default btn-block'>
+          <span
+              className='glyphicon glyphicon-eye-open'
+              aria-hidden='true'></span> Make Public
+        </a>;
     }
 
     let shared = null;
@@ -60,7 +82,7 @@ class ProtocolViewPage extends React.Component {
           <div className='col-lg-12'>
 
             <div className='protocol-view-header vertical-align'>
-              <div className='col-xs-10'>
+              <div className='col-xs-8'>
                 <span className='protocol-list-item-name'>
                   {//'delta / protocol' + this.props.params.protocolId
                     versions[0].user.first_name + ' / ' + versions[0].title
@@ -73,6 +95,10 @@ class ProtocolViewPage extends React.Component {
                 <span className='protocol-view-builder-link'>
                   <a href={this.builderUrl + '/en/procedures/' + id} target='_blank'>View in builder</a>
                 </span>
+              </div>
+
+              <div className='col-xs-2'>
+                {publicButton}
               </div>
 
               <div className='col-xs-2'>
